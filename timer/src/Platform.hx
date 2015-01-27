@@ -1,7 +1,6 @@
 ﻿/* ========================================================================== */
 /*   Platform.hx                                                              */
-/*   This class contains NME especific code.                                  */
-/*   Copyright (c) 2014 Laurens Rodriguez Oscanoa.                            */
+/*   Copyright (c) 2015 Laurens Rodriguez Oscanoa.                            */
 /* -------------------------------------------------------------------------- */
 /*   This code is licensed under the MIT license:                             */
 /*   http://www.opensource.org/licenses/mit-license.php                       */
@@ -33,8 +32,7 @@ import flash.ui.Keyboard;
 import openfl.Assets;
 import openfl.display.Tilesheet;
 
-// NME implementation for tetris game
-class Platform extends PlatformBase
+class Platform extends Sprite
 {
     // -------------------------------------------------------------------------
     // UI layout (quantities are expressed in pixels)
@@ -148,7 +146,7 @@ class Platform extends PlatformBase
     public function new()
     {
         super();
-        init();
+		init();
 #if (android || ios || blackberry)
         resize(null);
 #end
@@ -159,10 +157,6 @@ class Platform extends PlatformBase
     {
 		current.stage.align = StageAlign.TOP_LEFT;
 		current.stage.scaleMode = StageScaleMode.NO_SCALE;
-
-        // Create game
-        mGame = new Game(this);
-        mGame.startGame();
 
         // Calculate offset for drawing.
         mYOffset = Std.int((SCREEN_HEIGHT - BACKGROUND_HEIGHT) / 2);
@@ -262,15 +256,10 @@ class Platform extends PlatformBase
         // Registering events
         current.stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
         current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-        current.stage.addEventListener(KeyboardEvent.KEY_UP, onEvent);
-        current.stage.addEventListener(MouseEvent.MOUSE_UP, onEvent);
+        //current.stage.addEventListener(KeyboardEvent.KEY_UP, onEvent);
+        //current.stage.addEventListener(MouseEvent.MOUSE_UP, onEvent);
         current.stage.addEventListener(Event.RESIZE, resize);
 
-        // Play music background
-        mMusicSound = Assets.getSound("stc_theme_loop");
-        //mMusicChannel = mMusicSound.play(MUSIC_LOOP_START, 0, new SoundTransform(MUSIC_VOLUME));
-        //mMusicChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-        mMusicPosition = 0;
         mIsMuted = false;
 
         // Load sound effects
@@ -281,85 +270,29 @@ class Platform extends PlatformBase
 
         // Add control pads
 #if debug
-        var alphaPad:Float = 0.10;
+        var alphaPad:Float = 0.25;
 #else
         var alphaPad:Float = 0;
 #end
 
         mPadLeft = new Sprite();
-        drawBox(mPadLeft, 0, 0, 200, 160, 0xFF0000, alphaPad);
-        mPadLeft.x = -50;
-        mPadLeft.y = 80;
+        drawBox(mPadLeft, 0, 0, 260, 320, 0x00FFFF, alphaPad);
+        mPadLeft.x = -48;
+        mPadLeft.y = 0;
         addChild(mPadLeft);
         mPadLeft.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
 
         mPadRight = new Sprite();
-        drawBox(mPadRight, 0, 0, 200, 160, 0xFF0000, alphaPad);
-        mPadRight.x = 330;
-        mPadRight.y = 80;
+        drawBox(mPadRight, 0, 0, 260, 320, 0xFF00FF, alphaPad);
+        mPadRight.x = 268;
+        mPadRight.y = 0;
         addChild(mPadRight);
         mPadRight.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
 
-        mPadRotate = new Sprite();
-        drawBox(mPadRotate, 0, 0, 170, 100, 0xFF0000, alphaPad);
-        mPadRotate.x = 155;
-        mPadRotate.y = 0;
-        addChild(mPadRotate);
-        mPadRotate.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadDrop = new Sprite();
-        drawBox(mPadDrop, 0, 0, 170, 100, 0xFF0000, alphaPad);
-        mPadDrop.x = 155;
-        mPadDrop.y = 220;
-        addChild(mPadDrop);
-        mPadDrop.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadDown = new Sprite();
-        drawBox(mPadDown, 0, 0, 170, 110, 0x00FF00, alphaPad);
-        mPadDown.x = 155;
-        mPadDown.y = 105;
-        addChild(mPadDown);
-        mPadDown.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadNext = new Sprite();
-        drawBox(mPadNext, 0, 0, 75, 75, 0xFFFF00, alphaPad);
-        mPadNext.x = 75;
-        mPadNext.y = 0;
-        addChild(mPadNext);
-        mPadNext.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadMute = new Sprite();
-        drawBox(mPadMute, 0, 0, 75, 75, 0x00FF00, alphaPad);
-        mPadMute.x = 0;
-        mPadMute.y = 0;
-        addChild(mPadMute);
-        mPadMute.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadRestart = new Sprite();
-        drawBox(mPadRestart, 0, 0, 150, 75, 0xFFFF00, alphaPad);
-        mPadRestart.x = 0;
-        mPadRestart.y = 245;
-        addChild(mPadRestart);
-        mPadRestart.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadShadow = new Sprite();
-        drawBox(mPadShadow, 0, 0, 75, 75, 0xFFFF00, alphaPad);
-        mPadShadow.x = 330;
-        mPadShadow.y = 0;
-        addChild(mPadShadow);
-        mPadShadow.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
-        mPadMaster = new Sprite();
-        drawBox(mPadMaster, 0, 0, 75, 75, 0x00FF00, alphaPad);
-        mPadMaster.x = 405;
-        mPadMaster.y = 0;
-        addChild(mPadMaster);
-        mPadMaster.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
-
         mPadPause = new Sprite();
-        drawBox(mPadPause, 0, 0, 150, 75, 0xFFFF00, alphaPad);
-        mPadPause.x = 330;
-        mPadPause.y = 245;
+        drawBox(mPadPause, 0, 0, 50, 50, 0xFFFF00, alphaPad);
+        mPadPause.x = 215;
+        mPadPause.y = 135;
         addChild(mPadPause);
         mPadPause.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
     }
@@ -368,151 +301,79 @@ class Platform extends PlatformBase
     {
         if (event.target == mPadLeft)
         {
-            mGame.onEventStart(Game.EVENT_MOVE_LEFT);
+            trace( "LEFT" );
         }
         else if (event.target == mPadRight)
         {
-            mGame.onEventStart(Game.EVENT_MOVE_RIGHT);
+            trace( "RIGHT" );
         }
-        else if (event.target == mPadRotate)
-        {
-            mGame.onEventStart(Game.EVENT_ROTATE_CW);
-        }
-        else if (event.target == mPadDrop)
-        {
-            mGame.onEventStart(Game.EVENT_DROP);
-        }
-        else if (event.target == mPadDown)
-        {
-            mGame.onEventStart(Game.EVENT_MOVE_DOWN);
-        }
-        else if (event.target == mPadNext)
-        {
-            mGame.onEventStart(Game.EVENT_SHOW_NEXT);
-        }
-        else if (event.target == mPadRestart)
-        {
-            if (!mGame.isOver)
-            {
-                mGame.isOver = true;
-                onGameOver(mGame.isOver);
-            }
-            else
-            {
-                onRestart();
-            }
-        }
-        else if (event.target == mPadShadow)
-        {
-            mGame.onEventStart(Game.EVENT_SHOW_SHADOW);
-        }
+        //else if (event.target == mPadRotate)
+        //{
+            //mGame.onEventStart(Game.EVENT_ROTATE_CW);
+        //}
+        //else if (event.target == mPadDrop)
+        //{
+            //mGame.onEventStart(Game.EVENT_DROP);
+        //}
+        //else if (event.target == mPadDown)
+        //{
+            //mGame.onEventStart(Game.EVENT_MOVE_DOWN);
+        //}
+        //else if (event.target == mPadNext)
+        //{
+            //mGame.onEventStart(Game.EVENT_SHOW_NEXT);
+        //}
+        //else if (event.target == mPadRestart)
+        //{
+            //if (!mGame.isOver)
+            //{
+                //mGame.isOver = true;
+                //onGameOver(mGame.isOver);
+            //}
+            //else
+            //{
+                //onRestart();
+            //}
+        //}
+        //else if (event.target == mPadShadow)
+        //{
+            //mGame.onEventStart(Game.EVENT_SHOW_SHADOW);
+        //}
         else if (event.target == mPadPause)
         {
-            mGame.onEventStart(Game.EVENT_PAUSE);
+            trace( "PAUSE" );
         }
-        else if (event.target == mPadMute)
-        {
-            onMute();
-        }
-        else if (event.target == mPadMaster)
-        {
-            onMasterMode();
-        }
-    }
-
-    // Called if it's necessary to redraw the board.
-    override public function onTetrominoLand():Void
-    {
-        mRefreshBoard = true;
-    }
-
-    // Called when a row is filled.
-    override public function onFilledRows():Void
-    {
-        mRowSound.play(0, 0, new SoundTransform(MUSIC_VOLUME));
-    }
-
-    // Makes the background music to loop in section
-    public function onSoundComplete(event:Event):Void
-    {
-        if (mMusicChannel != null)
-        {
-            mMusicChannel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-            mMusicChannel = mMusicSound.play(MUSIC_LOOP_START, 0, new SoundTransform(MUSIC_VOLUME));
-            mMusicChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-        }
+        //else if (event.target == mPadMute)
+        //{
+            //onMute();
+        //}
+        //else if (event.target == mPadMaster)
+        //{
+            //onMasterMode();
+        //}
+		mRowSound.play(0, 0, new SoundTransform(MUSIC_VOLUME));		
     }
 
     // Called every frame
     public function onEnterFrame(event:Event):Void
     {
-        mGame.update();
-    }
-
-    public function onEvent(event:Event):Void
-    {
-        // Just cancel any continuos action by now
-        mGame.onEventEnd(Game.EVENT_MOVE_LEFT);
-        mGame.onEventEnd(Game.EVENT_MOVE_RIGHT);
-        mGame.onEventEnd(Game.EVENT_MOVE_DOWN);
-        mGame.onEventEnd(Game.EVENT_ROTATE_CW);
+        //mGame.update();
     }
 
     public function onClosePopUp(event:Event):Void
     {
-        if (mGame.isPaused)
-        {
-            mGame.onEventStart(Game.EVENT_PAUSE);
-        }
-        else if (mGame.isOver)
-        {
-            mGame.onEventStart(Game.EVENT_RESTART);
-        }
-    }
-
-    private function onMasterMode():Void
-    {
-        if (!mGame.isOver)
-        {
-            mGame.setMasterMode(!mGame.getMasterMode());
-        }
-    }
-
-    private function onMute():Void
-    {
-        if (!mGame.isOver && !mGame.isPaused)
-        {
-            mIsMuted = !mIsMuted;
-
-            if (mMusicChannel != null)
-            {
-                mMusicPosition = mMusicChannel.position;
-                mMusicChannel.stop();
-                mMusicChannel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-                mMusicChannel = null;
-            }
-            else
-            {
-                //mMusicChannel = mMusicSound.play(mMusicPosition, 0, new SoundTransform(MUSIC_VOLUME));
-                //mMusicChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-            }
-        }
+        //if (mGame.isPaused)
+        //{
+            //mGame.onEventStart(Game.EVENT_PAUSE);
+        //}
+        //else if (mGame.isOver)
+        //{
+            //mGame.onEventStart(Game.EVENT_RESTART);
+        //}
     }
 
     private function onRestart():Void
     {
-        if (!mIsMuted && mGame.isOver)
-        {
-            // Restart music if the game was over.
-            if (mMusicChannel != null)
-            {
-                mMusicChannel.stop();
-                mMusicChannel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-            }
-            mMusicChannel = mMusicSound.play(0, 0, new SoundTransform(MUSIC_VOLUME));
-            mMusicChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-        }
-        mGame.onEventStart(Game.EVENT_RESTART);
     }
 
     public function onKeyDown(event:KeyboardEvent):Void
@@ -529,44 +390,34 @@ class Platform extends PlatformBase
         {
             // On quit game
             case Keyboard.ESCAPE:
-                mGame.isOver = true;
-                onGameOver(mGame.isOver);
-            case KEY_S, Keyboard.DOWN:
-                mGame.onEventStart(Game.EVENT_MOVE_DOWN);
-            case KEY_W, Keyboard.UP:
-                mGame.onEventStart(Game.EVENT_ROTATE_CW);
-            case KEY_A, Keyboard.LEFT:
-                mGame.onEventStart(Game.EVENT_MOVE_LEFT);
-            case KEY_D, Keyboard.RIGHT:
-                mGame.onEventStart(Game.EVENT_MOVE_RIGHT);
-            case Keyboard.SPACE:
-                mGame.onEventStart(Game.EVENT_DROP);
-            case Keyboard.F5:
-                onRestart();
-            case Keyboard.F1:
-                mGame.onEventStart(Game.EVENT_PAUSE);
-            case Keyboard.F2:
-                mGame.onEventStart(Game.EVENT_SHOW_NEXT);
-            case Keyboard.F3:
-                mGame.onEventStart(Game.EVENT_SHOW_SHADOW);
-            case Keyboard.F4:
-                onMute();
-            case Keyboard.ENTER, Keyboard.NUMPAD_ENTER, 10:
-                onMasterMode();
+                //mGame.isOver = true;
+                //onGameOver(mGame.isOver);
+            //case KEY_S, Keyboard.DOWN:
+                //mGame.onEventStart(Game.EVENT_MOVE_DOWN);
+            //case KEY_W, Keyboard.UP:
+                //mGame.onEventStart(Game.EVENT_ROTATE_CW);
+            //case KEY_A, Keyboard.LEFT:
+                //mGame.onEventStart(Game.EVENT_MOVE_LEFT);
+            //case KEY_D, Keyboard.RIGHT:
+                //mGame.onEventStart(Game.EVENT_MOVE_RIGHT);
+            //case Keyboard.SPACE:
+                //mGame.onEventStart(Game.EVENT_DROP);
+            //case Keyboard.F5:
+                //onRestart();
+            //case Keyboard.F1:
+                //mGame.onEventStart(Game.EVENT_PAUSE);
+            //case Keyboard.F2:
+                //mGame.onEventStart(Game.EVENT_SHOW_NEXT);
+            //case Keyboard.F3:
+                //mGame.onEventStart(Game.EVENT_SHOW_SHADOW);
         }
     }
 
     // Called when game is finished/restarted.
-    override public function onGameOver(isOver:Bool):Void
+    public function onGameOver(isOver:Bool):Void
     {
         if (isOver)
         {
-            if (mMusicChannel != null)
-            {
-                mMusicChannel.stop();
-                mMusicChannel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-                mMusicChannel = null;
-            }
             mPopUpLabel.text = STR_END;
             mPopUpLabel.x = SCREEN_WIDTH / 2 - mPopUpLabel.textWidth / 2;
 
@@ -577,21 +428,13 @@ class Platform extends PlatformBase
             current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onClosePopUp);
         }
         mPopUp.visible = isOver;
-        mGame.setMasterMode(false);
     }
 
     // Called when game is paused/resumed.
-    override public function onGamePaused(isPaused:Bool):Void
+    public function onGamePaused(isPaused:Bool):Void
     {
         if (isPaused)
         {
-            if (mMusicChannel != null)
-            {
-                mMusicPosition = mMusicChannel.position;
-                mMusicChannel.stop();
-                mMusicChannel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-                mMusicChannel = null;
-            }
             mPopUpLabel.text = STR_PAUSE;
             mPopUpLabel.x = SCREEN_WIDTH / 2 - mPopUpLabel.textWidth / 2;
 
@@ -599,160 +442,135 @@ class Platform extends PlatformBase
         }
         else
         {
-            if (!mIsMuted)
-            {
-                //mMusicChannel = mMusicSound.play(mMusicPosition, 0, new SoundTransform(MUSIC_VOLUME));
-                //mMusicChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-            }
             current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onClosePopUp);
         }
         mPopUp.visible = isPaused;
     }
 
-    // Draw a tile from a tetromino
-    private function drawTile(x:Int, y:Int, tile:Int, shadow:Int = 0):Void
-    {
-        var data:Array<Float> = [x, mYOffset + y, tile + shadow * 8];
-        mTilesBlocks.drawTiles(mCanvasBlocks.graphics, data, false, 0);
-    }
-
-    // Draw a number on the given position
-    private function drawNumber(x:Int, y:Int, number:Int, length:Int, color:Int):Void
-    {
-        var pos:Int = 0;
-        do
-        {
-            var data:Array<Float> = [x + NUMBER_WIDTH * (length - pos), mYOffset + y, (number % 10) + 10 * color];
-            mTilesNumbers.drawTiles(mCanvasNumbers.graphics, data, false, 0);
-
-            number = Std.int(number / 10);
-        } while (++pos < length);
-    }
-
     // Render the state of the game using platform functions
-    override public function renderGame():Void
+    public function renderGame():Void
     {
-        if (mRefreshFrames > 0)
-        {
-            if (--mRefreshFrames == 0)
-            {
-                mGame.stateChanged = true;
-            }
-        }
-
-        // Don't draw if it's not necessary
-        if (mGame.stateChanged)
-        {
-            var i:Int, j:Int;
-
-            // Clear background
-            mCanvasBlocks.graphics.clear();
-
-            // Draw preview block
-            if (mGame.showPreview)
-            {
-                for (i in 0 ... 4)
-                {
-                    for (j in 0 ... 4)
-                    {
-                        if (mGame.nextBlock.cells[i][j] != Game.EMPTY_CELL)
-                        {
-                            drawTile(PREVIEW_X + (TILE_SIZE * i),
-                                    PREVIEW_Y + (TILE_SIZE * j), mGame.nextBlock.cells[i][j]);
-                        }
-                    }
-                }
-            }
-
-            // Draw shadow tetromino
-            if (mGame.showShadow && mGame.shadowGap > 0)
-            {
-                for (i in 0 ... 4)
-                {
-                    for (j in 0 ... 4)
-                    {
-                        if (mGame.fallingBlock.cells[i][j] != Game.EMPTY_CELL)
-                        {
-                            drawTile(BOARD_X + (TILE_SIZE * (mGame.fallingBlock.x + i)),
-                                    BOARD_Y + (TILE_SIZE * (mGame.fallingBlock.y + mGame.shadowGap + j)),
-                                    mGame.fallingBlock.cells[i][j], 1);
-                        }
-                    }
-                }
-            }
-
-            // Draw the cells in the board
-            if (mGame.getMasterMode())
-            {
-                if (mRefreshBoard)
-                {
-                    for (i in 0 ... Game.BOARD_WIDTH)
-                    {
-                        for (j in 0 ... Game.BOARD_HEIGHT)
-                        {
-                            if (mGame.map[i][j] != Game.EMPTY_CELL)
-                            {
-                                drawTile(BOARD_X + (TILE_SIZE * i),
-                                        BOARD_Y + (TILE_SIZE * j), mGame.map[i][j]);
-                            }
-                        }
-                    }
-                    mRefreshBoard = false;
-                    mRefreshFrames = 10;
-                }
-            }
-            else
-            {
-                for (i in 0 ... Game.BOARD_WIDTH)
-                {
-                    for (j in 0 ... Game.BOARD_HEIGHT)
-
-                    {
-                        if (mGame.map[i][j] != Game.EMPTY_CELL)
-                        {
-                            drawTile(BOARD_X + (TILE_SIZE * i),
-                                    BOARD_Y + (TILE_SIZE * j), mGame.map[i][j]);
-                        }
-                    }
-                }
-            }
-
-            // Draw falling tetromino
-            for (i in 0 ... 4)
-            {
-                for (j in 0 ... 4)
-                {
-                    if (mGame.fallingBlock.cells[i][j] != Game.EMPTY_CELL)
-                    {
-                        drawTile(BOARD_X + (TILE_SIZE * (mGame.fallingBlock.x + i)),
-                                BOARD_Y + (TILE_SIZE * (mGame.fallingBlock.y + j)),
-                                mGame.fallingBlock.cells[i][j]);
-                    }
-                }
-            }
-            mGame.stateChanged = false;
-        }
-
-        // Update game statistic data
-        if (mGame.scoreChanged)
-        {
-            mCanvasNumbers.graphics.clear();
-
-            drawNumber(LEVEL_X, LEVEL_Y, mGame.stats.level, LEVEL_LENGTH, Game.COLOR_WHITE);
-            drawNumber(LINES_X, LINES_Y, mGame.stats.lines, LINES_LENGTH, Game.COLOR_WHITE);
-            drawNumber(SCORE_X, SCORE_Y, Std.int(mGame.stats.score), SCORE_LENGTH, Game.COLOR_WHITE);
-
-            drawNumber(TETROMINO_X, TETROMINO_L_Y, mGame.stats.pieces[Game.TETROMINO_L], TETROMINO_LENGTH, Game.COLOR_ORANGE);
-            drawNumber(TETROMINO_X, TETROMINO_I_Y, mGame.stats.pieces[Game.TETROMINO_I], TETROMINO_LENGTH, Game.COLOR_CYAN);
-            drawNumber(TETROMINO_X, TETROMINO_T_Y, mGame.stats.pieces[Game.TETROMINO_T], TETROMINO_LENGTH, Game.COLOR_PURPLE);
-            drawNumber(TETROMINO_X, TETROMINO_S_Y, mGame.stats.pieces[Game.TETROMINO_S], TETROMINO_LENGTH, Game.COLOR_GREEN);
-            drawNumber(TETROMINO_X, TETROMINO_Z_Y, mGame.stats.pieces[Game.TETROMINO_Z], TETROMINO_LENGTH, Game.COLOR_RED);
-            drawNumber(TETROMINO_X, TETROMINO_O_Y, mGame.stats.pieces[Game.TETROMINO_O], TETROMINO_LENGTH, Game.COLOR_YELLOW);
-            drawNumber(TETROMINO_X, TETROMINO_J_Y, mGame.stats.pieces[Game.TETROMINO_J], TETROMINO_LENGTH, Game.COLOR_BLUE);
-
-            drawNumber(PIECES_X, PIECES_Y, mGame.stats.totalPieces, PIECES_LENGTH, Game.COLOR_WHITE);
-            mGame.scoreChanged = false;
-        }
+        //if (mRefreshFrames > 0)
+        //{
+            //if (--mRefreshFrames == 0)
+            //{
+                //mGame.stateChanged = true;
+            //}
+        //}
+//
+        //// Don't draw if it's not necessary
+        //if (mGame.stateChanged)
+        //{
+            //var i:Int, j:Int;
+//
+            //// Clear background
+            //mCanvasBlocks.graphics.clear();
+//
+            //// Draw preview block
+            //if (mGame.showPreview)
+            //{
+                //for (i in 0 ... 4)
+                //{
+                    //for (j in 0 ... 4)
+                    //{
+                        //if (mGame.nextBlock.cells[i][j] != Game.EMPTY_CELL)
+                        //{
+                            //drawTile(PREVIEW_X + (TILE_SIZE * i),
+                                    //PREVIEW_Y + (TILE_SIZE * j), mGame.nextBlock.cells[i][j]);
+                        //}
+                    //}
+                //}
+            //}
+//
+            //// Draw shadow tetromino
+            //if (mGame.showShadow && mGame.shadowGap > 0)
+            //{
+                //for (i in 0 ... 4)
+                //{
+                    //for (j in 0 ... 4)
+                    //{
+                        //if (mGame.fallingBlock.cells[i][j] != Game.EMPTY_CELL)
+                        //{
+                            //drawTile(BOARD_X + (TILE_SIZE * (mGame.fallingBlock.x + i)),
+                                    //BOARD_Y + (TILE_SIZE * (mGame.fallingBlock.y + mGame.shadowGap + j)),
+                                    //mGame.fallingBlock.cells[i][j], 1);
+                        //}
+                    //}
+                //}
+            //}
+//
+            //// Draw the cells in the board
+            //if (mGame.getMasterMode())
+            //{
+                //if (mRefreshBoard)
+                //{
+                    //for (i in 0 ... Game.BOARD_WIDTH)
+                    //{
+                        //for (j in 0 ... Game.BOARD_HEIGHT)
+                        //{
+                            //if (mGame.map[i][j] != Game.EMPTY_CELL)
+                            //{
+                                //drawTile(BOARD_X + (TILE_SIZE * i),
+                                        //BOARD_Y + (TILE_SIZE * j), mGame.map[i][j]);
+                            //}
+                        //}
+                    //}
+                    //mRefreshBoard = false;
+                    //mRefreshFrames = 10;
+                //}
+            //}
+            //else
+            //{
+                //for (i in 0 ... Game.BOARD_WIDTH)
+                //{
+                    //for (j in 0 ... Game.BOARD_HEIGHT)
+//
+                    //{
+                        //if (mGame.map[i][j] != Game.EMPTY_CELL)
+                        //{
+                            //drawTile(BOARD_X + (TILE_SIZE * i),
+                                    //BOARD_Y + (TILE_SIZE * j), mGame.map[i][j]);
+                        //}
+                    //}
+                //}
+            //}
+//
+            //// Draw falling tetromino
+            //for (i in 0 ... 4)
+            //{
+                //for (j in 0 ... 4)
+                //{
+                    //if (mGame.fallingBlock.cells[i][j] != Game.EMPTY_CELL)
+                    //{
+                        //drawTile(BOARD_X + (TILE_SIZE * (mGame.fallingBlock.x + i)),
+                                //BOARD_Y + (TILE_SIZE * (mGame.fallingBlock.y + j)),
+                                //mGame.fallingBlock.cells[i][j]);
+                    //}
+                //}
+            //}
+            //mGame.stateChanged = false;
+        //}
+//
+        //// Update game statistic data
+        //if (mGame.scoreChanged)
+        //{
+            //mCanvasNumbers.graphics.clear();
+//
+            //drawNumber(LEVEL_X, LEVEL_Y, mGame.stats.level, LEVEL_LENGTH, Game.COLOR_WHITE);
+            //drawNumber(LINES_X, LINES_Y, mGame.stats.lines, LINES_LENGTH, Game.COLOR_WHITE);
+            //drawNumber(SCORE_X, SCORE_Y, Std.int(mGame.stats.score), SCORE_LENGTH, Game.COLOR_WHITE);
+//
+            //drawNumber(TETROMINO_X, TETROMINO_L_Y, mGame.stats.pieces[Game.TETROMINO_L], TETROMINO_LENGTH, Game.COLOR_ORANGE);
+            //drawNumber(TETROMINO_X, TETROMINO_I_Y, mGame.stats.pieces[Game.TETROMINO_I], TETROMINO_LENGTH, Game.COLOR_CYAN);
+            //drawNumber(TETROMINO_X, TETROMINO_T_Y, mGame.stats.pieces[Game.TETROMINO_T], TETROMINO_LENGTH, Game.COLOR_PURPLE);
+            //drawNumber(TETROMINO_X, TETROMINO_S_Y, mGame.stats.pieces[Game.TETROMINO_S], TETROMINO_LENGTH, Game.COLOR_GREEN);
+            //drawNumber(TETROMINO_X, TETROMINO_Z_Y, mGame.stats.pieces[Game.TETROMINO_Z], TETROMINO_LENGTH, Game.COLOR_RED);
+            //drawNumber(TETROMINO_X, TETROMINO_O_Y, mGame.stats.pieces[Game.TETROMINO_O], TETROMINO_LENGTH, Game.COLOR_YELLOW);
+            //drawNumber(TETROMINO_X, TETROMINO_J_Y, mGame.stats.pieces[Game.TETROMINO_J], TETROMINO_LENGTH, Game.COLOR_BLUE);
+//
+            //drawNumber(PIECES_X, PIECES_Y, mGame.stats.totalPieces, PIECES_LENGTH, Game.COLOR_WHITE);
+            //mGame.scoreChanged = false;
+        //}
     }
 
 	private function resize(event:Event):Void
