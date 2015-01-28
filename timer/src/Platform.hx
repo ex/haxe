@@ -6,574 +6,203 @@
 /*   http://www.opensource.org/licenses/mit-license.php                       */
 /* -------------------------------------------------------------------------- */
 
-import flash.events.Event;
-import flash.events.KeyboardEvent;
-import flash.events.MouseEvent;
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.Sprite;
-import flash.display.StageAlign;
-import flash.display.StageScaleMode;
-import flash.geom.Rectangle;
-import flash.geom.Point;
-#if android
-import flash.Lib;
-#end
-import flash.Lib.current;
-import flash.media.Sound;
-import flash.media.SoundChannel;
-import flash.media.SoundTransform;
-import flash.text.TextField;
-import flash.text.Font;
-import flash.text.TextFormatAlign;
-import flash.text.TextFormat;
-import flash.text.TextFieldType;
-import flash.ui.Keyboard;
 import openfl.Assets;
-import openfl.display.Tilesheet;
+import openfl.events.Event;
+import openfl.events.MouseEvent;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Sprite;
+import openfl.display.StageAlign;
+import openfl.display.StageScaleMode;
+import openfl.geom.Rectangle;
+import openfl.geom.Point;
+import openfl.Lib.current;
+import openfl.Lib.getTimer;
+import openfl.media.Sound;
+import openfl.media.SoundChannel;
+import openfl.media.SoundTransform;
+import openfl.text.Font;
+import openfl.text.TextField;
+import openfl.text.TextFormat;
+import openfl.text.TextFormatAlign;
 
 class Platform extends Sprite
 {
-    // -------------------------------------------------------------------------
-    // UI layout (quantities are expressed in pixels)
-    // -------------------------------------------------------------------------
+    private static inline var SCREEN_WIDTH:Int = 320;
+    private static inline var SCREEN_HEIGHT:Int = 480;
 
-    // Size of square tile
-    private static inline var TILE_SIZE:Int = 12;
-
-    private static inline var SCREEN_WIDTH:Int = 480;
-    private static inline var SCREEN_HEIGHT:Int = 320;
-    private static inline var BACKGROUND_HEIGHT:Int = 272;
-
-    // Board up-left corner coordinates
-    private static inline var BOARD_X:Int = 180;
-    private static inline var BOARD_Y:Int = 4;
-
-    // Keyboard codes
-    private static inline var KEY_A:Int = 65;
-    private static inline var KEY_W:Int = 87;
-    private static inline var KEY_S:Int = 83;
-    private static inline var KEY_D:Int = 68;
-
-    // Preview tetromino position
-    private static inline var PREVIEW_X:Int = 112;
-    private static inline var PREVIEW_Y:Int = 210;
-
-    // Score position and length on screen
-    private static inline var SCORE_X:Int = 72;
-    private static inline var SCORE_Y:Int = 64;
-    private static inline var SCORE_LENGTH:Int = 10;
-
-    // Lines position and length on screen
-    private static inline var LINES_X:Int = 108;
-    private static inline var LINES_Y:Int = 46;
-    private static inline var LINES_LENGTH:Int = 5;
-
-    // Level position and length on screen
-    private static inline var LEVEL_X:Int = 108;
-    private static inline var LEVEL_Y:Int = 28;
-    private static inline var LEVEL_LENGTH:Int = 5;
-
-    // Tetromino subtotals position
-    private static inline var TETROMINO_X:Int = 425;
-    private static inline var TETROMINO_L_Y:Int = 53;
-    private static inline var TETROMINO_I_Y:Int = 77;
-    private static inline var TETROMINO_T_Y:Int = 101;
-    private static inline var TETROMINO_S_Y:Int = 125;
-    private static inline var TETROMINO_Z_Y:Int = 149;
-    private static inline var TETROMINO_O_Y:Int = 173;
-    private static inline var TETROMINO_J_Y:Int = 197;
-    private static inline var TETROMINO_LENGTH:Int = 5;
-
-    // Tetromino total position
-    private static inline var PIECES_X:Int = 418;
-    private static inline var PIECES_Y:Int = 221;
-    private static inline var PIECES_LENGTH:Int = 6;
-
-    // Size of number
-    private static inline var NUMBER_WIDTH:Int = 7;
-    private static inline var NUMBER_HEIGHT:Int = 9;
-
-    // Symbol names
-    private static inline var BMP_BACK:String = "mcBmpBack";
-    private static inline var BMP_TILE_BLOCKS:String = "mcBmpBlocks";
-    private static inline var FLA_POPUP_PAUSE:String = "mcPopUpPaused";
-    private static inline var FLA_POPUP_OVER:String = "mcPopUpOver";
-
-    // Symbol names
-    private static inline var MUSIC_VOLUME:Float = 0.4;
-    private static inline var MUSIC_LOOP_START:Int = 3693;
-
-    private static inline var STR_PAUSE:String = "GAME PAUSED";
-    private static inline var STR_END:String = "GAME OVER";
-    private static inline var STR_CREDITS:String = "Programming: Laurens Rodriguez\n" +
-                                                   "      Music: Jarno Alanko";
-    // Platform data
-    private var mPopUp:Sprite;
-    private var mPopUpLabel:TextField;
-    private var mPopUpCredits:TextField;
-    private var mBmpCanvas:BitmapData;
-    private var mBmpTextCanvas:BitmapData;
-    private var mCanvasBlocks:Sprite;
-    private var mCanvasNumbers:Sprite;
-    private var mTilesBlocks:Tilesheet;
-    private var mTilesNumbers:Tilesheet;
-
-    private var mMusicSound:Sound;
-    private var mRowSound:Sound;
-    private var mMusicChannel:SoundChannel;
-    private var mMusicPosition:Float;
-    private var mIsMuted:Bool;
-
-    private var mRefreshBoard:Bool;
-    private var mRefreshFrames:Int;
-
-    private var mYOffset:Int;
-
-    private var mPadLeft:Sprite;
-    private var mPadRight:Sprite;
-    private var mPadDown:Sprite;
-    private var mPadRotate:Sprite;
-    private var mPadDrop:Sprite;
-    private var mPadPause:Sprite;
-    private var mPadRestart:Sprite;
-    private var mPadShadow:Sprite;
-    private var mPadNext:Sprite;
-    private var mPadMute:Sprite;
-    private var mPadMaster:Sprite;
+    private static inline var SOUND_VOLUME:Float = 0.4;
 
     //--------------------------------------------------------------------------
     public function new()
     {
         super();
-		init();
-#if (android || ios || blackberry)
-        resize(null);
+        init();
+#if ( android || ios || blackberry )
+        resize( null );
 #end
     }
 
     // Initializes platform.
     public function init():Void
     {
-		current.stage.align = StageAlign.TOP_LEFT;
-		current.stage.scaleMode = StageScaleMode.NO_SCALE;
+        current.stage.align = StageAlign.TOP_LEFT;
+        current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
-        // Calculate offset for drawing.
-        mYOffset = Std.int((SCREEN_HEIGHT - BACKGROUND_HEIGHT) / 2);
+        m_state = ST_START;
+        m_initTimer = 1;
 
         // Load background and add it to scene
-        addChild(new Bitmap(Assets.getBitmapData("assets/images/back.png", false)));
+        addChild( new Bitmap( Assets.getBitmapData( "assets/images/back.png", false ) ) );
 
-        // Create canvas for drawing tiles
-        mBmpCanvas = new BitmapData(SCREEN_WIDTH, SCREEN_HEIGHT, true, 0);
-        addChild(new Bitmap(mBmpCanvas));
+        m_bmpPause = new Bitmap( Assets.getBitmapData( "assets/images/top.png", false ) );
+        addChild( m_bmpPause );
 
-        // Create canvas for drawing text info
-        mBmpTextCanvas = new BitmapData(SCREEN_WIDTH, SCREEN_HEIGHT, true, 0);
-        addChild(new Bitmap(mBmpTextCanvas));
-
-        // Load tile images.
-        // The tiles are stored in 2 rows of 8 cells, second row are the shadow cells.
-        mTilesBlocks = new Tilesheet(Assets.getBitmapData("assets/images/blocks.png", false));
-        for (k in  0 ... 16)
-        {
-            var shadow:Int = (k < 8)? 0 : 1;
-            var recSource:Rectangle = new Rectangle();
-            recSource.x = TILE_SIZE * (k % 8);
-            recSource.y = (TILE_SIZE + 1) * shadow;
-            recSource.width = TILE_SIZE + 1;
-            recSource.height = TILE_SIZE + 1 - shadow;
-            mTilesBlocks.addTileRect(recSource);
-        }
-        mCanvasBlocks = new Sprite();
-        addChild(mCanvasBlocks);
-
-        // Load number images.
-        // The tiles are stored in 8 rows of 10 cells.
-        mTilesNumbers = new Tilesheet(Assets.getBitmapData("assets/images/numbers.png", false));
-        for (k in  0 ... 80)
-        {
-            var row:Int = Std.int(k / 10);
-            var recSource:Rectangle = new Rectangle();
-            recSource.x = NUMBER_WIDTH * (k % 10);
-            recSource.y = NUMBER_HEIGHT * row;
-            recSource.width = NUMBER_WIDTH;
-            recSource.height = NUMBER_HEIGHT;
-            mTilesNumbers.addTileRect(recSource);
-        }
-        mCanvasNumbers = new Sprite();
-        addChild(mCanvasNumbers);
-
-        // Create popup
-        var width:Int = current.stage.stageWidth;
-        var height:Int = current.stage.stageHeight;
-        trace("width: " + width + " height:" +height);
-
-        mPopUp = new Sprite();
-        var popupBack:Sprite = new Sprite();
-        popupBack.graphics.beginFill(0x111133);
-        popupBack.graphics.drawRect(-50, -50, SCREEN_WIDTH + 100, SCREEN_HEIGHT + 100);
-        popupBack.graphics.endFill();
-        popupBack.alpha = 0.6;
-        mPopUp.addChild(popupBack);
-
-        var font:Font = Assets.getFont("assets/fonts/luconex.ttf");
+        var font:Font = Assets.getFont("assets/fonts/dd.otf");
 
         var textFormat:TextFormat = new TextFormat();
         textFormat.font = font.fontName;
-        textFormat.size = 28;
+        textFormat.size = 70;
         textFormat.letterSpacing = 3;
-        textFormat.color = 0xBBBBBB;
+        textFormat.color = 0xFFFFFFFF;
         textFormat.align = TextFormatAlign.LEFT;
 
-        mPopUpLabel = new TextField();
-        mPopUpLabel.embedFonts = true;
-        mPopUpLabel.selectable = false;
-        mPopUpLabel.defaultTextFormat = textFormat;
-        mPopUpLabel.width = SCREEN_WIDTH;
-        mPopUpLabel.y = SCREEN_HEIGHT / 2 - 20;
-        mPopUp.addChild(mPopUpLabel);
+        m_textUp = new TextField();
+        m_textUp.embedFonts = true;
+        m_textUp.selectable = false;
+        m_textUp.defaultTextFormat = textFormat;
+        m_textUp.width = SCREEN_WIDTH;
+        addChild(m_textUp);
+        m_textUp.text = "00:00:00";
+        m_textUp.x = 30;
+        m_textUp.y = 0.25 * SCREEN_HEIGHT - m_textUp.textHeight / 2;
 
-        var creditFormat:TextFormat = new TextFormat();
-        creditFormat.font = font.fontName;
-        creditFormat.size = 13;
-        creditFormat.letterSpacing = 1;
-        creditFormat.color = 0xFFFFFF;
-        creditFormat.align = TextFormatAlign.LEFT;
-
-        mPopUpCredits = new TextField();
-        mPopUpCredits.embedFonts = true;
-        mPopUpCredits.selectable = false;
-        mPopUpCredits.defaultTextFormat = creditFormat;
-        mPopUpCredits.width = SCREEN_WIDTH;
-        mPopUpCredits.text = STR_CREDITS;
-        mPopUpCredits.x = SCREEN_WIDTH / 2 - mPopUpCredits.textWidth / 2;
-        mPopUpCredits.y = SCREEN_HEIGHT / 2 + 65;
-        mPopUp.addChild(mPopUpCredits);
-        mPopUp.visible = false;
-        addChild(mPopUp);
+        m_textDown = new TextField();
+        m_textDown.embedFonts = true;
+        m_textDown.selectable = false;
+        m_textDown.defaultTextFormat = textFormat;
+        m_textDown.width = SCREEN_WIDTH;
+        addChild(m_textDown);
+        m_textDown.text = "00:00:00";
+        m_textDown.x = 30;
+        m_textDown.y = 0.75 * SCREEN_HEIGHT - m_textUp.textHeight / 2;
 
         // Registering events
         current.stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-        current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-        //current.stage.addEventListener(KeyboardEvent.KEY_UP, onEvent);
-        //current.stage.addEventListener(MouseEvent.MOUSE_UP, onEvent);
         current.stage.addEventListener(Event.RESIZE, resize);
 
-        mIsMuted = false;
-
         // Load sound effects
-        mRowSound = Assets.getSound("fx_line");
-
-        mRefreshBoard = false;
-        mRefreshFrames = 0;
+        m_soundTouch = Assets.getSound("fx_touch");
+        m_soundClick = Assets.getSound("fx_click");
 
         // Add control pads
-#if debug
-        var alphaPad:Float = 0.25;
-#else
         var alphaPad:Float = 0;
-#end
+        m_padTop = new Sprite();
+        drawBox(m_padTop, 0, 0, 320, 285, 0x00FFFF, alphaPad);
+        m_padTop.x = 0;
+        m_padTop.y = -55;
+        addChild(m_padTop);
+        m_padTop.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
 
-        mPadLeft = new Sprite();
-        drawBox(mPadLeft, 0, 0, 260, 320, 0x00FFFF, alphaPad);
-        mPadLeft.x = -48;
-        mPadLeft.y = 0;
-        addChild(mPadLeft);
-        mPadLeft.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
+        m_padDown = new Sprite();
+        drawBox(m_padDown, 0, 0, 320, 285, 0xFF00FF, alphaPad);
+        m_padDown.x = 0;
+        m_padDown.y = 250;
+        addChild(m_padDown);
+        m_padDown.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
 
-        mPadRight = new Sprite();
-        drawBox(mPadRight, 0, 0, 260, 320, 0xFF00FF, alphaPad);
-        mPadRight.x = 268;
-        mPadRight.y = 0;
-        addChild(mPadRight);
-        mPadRight.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
+        m_padRestart = new Sprite();
+        drawBox(m_padRestart, 0, 0, 56, 56, 0xFFFF00, alphaPad);
+        m_padRestart.x = 48;
+        m_padRestart.y = 212;
+        addChild(m_padRestart);
+        m_padRestart.addEventListener(MouseEvent.CLICK, onMouseDownPads);
 
-        mPadPause = new Sprite();
-        drawBox(mPadPause, 0, 0, 50, 50, 0xFFFF00, alphaPad);
-        mPadPause.x = 215;
-        mPadPause.y = 135;
-        addChild(mPadPause);
-        mPadPause.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
+        m_padPause = new Sprite();
+        drawBox(m_padPause, 0, 0, 56, 56, 0xFFFF00, alphaPad);
+        m_padPause.x = 132;
+        m_padPause.y = 212;
+        addChild(m_padPause);
+        m_padPause.addEventListener(MouseEvent.CLICK, onMouseDownPads);
+
+        m_padNext = new Sprite();
+        drawBox(m_padNext, 0, 0, 56, 56, 0xFFFF00, alphaPad);
+        m_padNext.x = 216;
+        m_padNext.y = 212;
+        addChild(m_padNext);
+        m_padNext.addEventListener(MouseEvent.CLICK, onMouseDownPads);
+
+        resetTimers();
     }
 
     public function onMouseDownPads(event:MouseEvent):Void
     {
-        if (event.target == mPadLeft)
+        if ( event.target == m_padTop )
         {
-            trace( "LEFT" );
+            if ( m_state == ST_TOP_ACTIVE )
+            {
+                m_state = ST_DOWN_ACTIVE;
+                m_soundTouch.play( 0, 0, new SoundTransform( SOUND_VOLUME ) );
+            }
         }
-        else if (event.target == mPadRight)
+        else if ( event.target == m_padDown )
         {
-            trace( "RIGHT" );
+            if ( m_state == ST_DOWN_ACTIVE )
+            {
+                m_state = ST_TOP_ACTIVE;
+                m_soundTouch.play( 0, 0, new SoundTransform( SOUND_VOLUME ) );
+            }
         }
-        //else if (event.target == mPadRotate)
-        //{
-            //mGame.onEventStart(Game.EVENT_ROTATE_CW);
-        //}
-        //else if (event.target == mPadDrop)
-        //{
-            //mGame.onEventStart(Game.EVENT_DROP);
-        //}
-        //else if (event.target == mPadDown)
-        //{
-            //mGame.onEventStart(Game.EVENT_MOVE_DOWN);
-        //}
-        //else if (event.target == mPadNext)
-        //{
-            //mGame.onEventStart(Game.EVENT_SHOW_NEXT);
-        //}
-        //else if (event.target == mPadRestart)
-        //{
-            //if (!mGame.isOver)
-            //{
-                //mGame.isOver = true;
-                //onGameOver(mGame.isOver);
-            //}
-            //else
-            //{
-                //onRestart();
-            //}
-        //}
-        //else if (event.target == mPadShadow)
-        //{
-            //mGame.onEventStart(Game.EVENT_SHOW_SHADOW);
-        //}
-        else if (event.target == mPadPause)
+        else if ( event.target == m_padPause )
         {
-            trace( "PAUSE" );
+            if ( m_state == ST_START )
+            {
+                onStart();
+            }
+            else
+            {
+                onPaused();
+            }
         }
-        //else if (event.target == mPadMute)
-        //{
-            //onMute();
-        //}
-        //else if (event.target == mPadMaster)
-        //{
-            //onMasterMode();
-        //}
-		mRowSound.play(0, 0, new SoundTransform(MUSIC_VOLUME));		
+        else if ( event.target == m_padRestart )
+        {
+            if ( m_state == ST_PAUSED )
+            {
+                onRestart();
+            }
+
+        }
+        else if ( event.target == m_padNext )
+        {
+            if ( m_state == ST_START )
+            {
+                m_initTimer = ( m_initTimer + 1 ) % 3;
+                resetTimers();
+                m_soundClick.play( 0, 0, new SoundTransform( SOUND_VOLUME ) );
+            }
+        }
     }
 
     // Called every frame
-    public function onEnterFrame(event:Event):Void
+    public function onEnterFrame( event:Event ):Void
     {
-        //mGame.update();
-    }
+        var currentTime:Float = getTimer();
+        var timeDelta:Int = Std.int( currentTime - m_systemTime );
+        m_systemTime = currentTime;
 
-    public function onClosePopUp(event:Event):Void
-    {
-        //if (mGame.isPaused)
-        //{
-            //mGame.onEventStart(Game.EVENT_PAUSE);
-        //}
-        //else if (mGame.isOver)
-        //{
-            //mGame.onEventStart(Game.EVENT_RESTART);
-        //}
-    }
-
-    private function onRestart():Void
-    {
-    }
-
-    public function onKeyDown(event:KeyboardEvent):Void
-    {
-#if android
-		if (event.keyCode == 27)
+        switch ( m_state )
         {
-			event.stopImmediatePropagation();
-			Lib.exit();
-		}
-#end
-        // On key pressed
-        switch (event.keyCode)
-        {
-            // On quit game
-            case Keyboard.ESCAPE:
-                //mGame.isOver = true;
-                //onGameOver(mGame.isOver);
-            //case KEY_S, Keyboard.DOWN:
-                //mGame.onEventStart(Game.EVENT_MOVE_DOWN);
-            //case KEY_W, Keyboard.UP:
-                //mGame.onEventStart(Game.EVENT_ROTATE_CW);
-            //case KEY_A, Keyboard.LEFT:
-                //mGame.onEventStart(Game.EVENT_MOVE_LEFT);
-            //case KEY_D, Keyboard.RIGHT:
-                //mGame.onEventStart(Game.EVENT_MOVE_RIGHT);
-            //case Keyboard.SPACE:
-                //mGame.onEventStart(Game.EVENT_DROP);
-            //case Keyboard.F5:
-                //onRestart();
-            //case Keyboard.F1:
-                //mGame.onEventStart(Game.EVENT_PAUSE);
-            //case Keyboard.F2:
-                //mGame.onEventStart(Game.EVENT_SHOW_NEXT);
-            //case Keyboard.F3:
-                //mGame.onEventStart(Game.EVENT_SHOW_SHADOW);
+            case ST_DOWN_ACTIVE:
+                m_timerDown -= timeDelta;
+                setTimerText( m_timerDown, m_textDown );
+
+            case ST_TOP_ACTIVE:
+                m_timerUp -= timeDelta;
+                setTimerText( m_timerUp, m_textUp );
         }
     }
 
-    // Called when game is finished/restarted.
-    public function onGameOver(isOver:Bool):Void
-    {
-        if (isOver)
-        {
-            mPopUpLabel.text = STR_END;
-            mPopUpLabel.x = SCREEN_WIDTH / 2 - mPopUpLabel.textWidth / 2;
-
-            current.stage.addEventListener(MouseEvent.MOUSE_DOWN, onClosePopUp);
-        }
-        else
-        {
-            current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onClosePopUp);
-        }
-        mPopUp.visible = isOver;
-    }
-
-    // Called when game is paused/resumed.
-    public function onGamePaused(isPaused:Bool):Void
-    {
-        if (isPaused)
-        {
-            mPopUpLabel.text = STR_PAUSE;
-            mPopUpLabel.x = SCREEN_WIDTH / 2 - mPopUpLabel.textWidth / 2;
-
-            current.stage.addEventListener(MouseEvent.MOUSE_DOWN, onClosePopUp);
-        }
-        else
-        {
-            current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onClosePopUp);
-        }
-        mPopUp.visible = isPaused;
-    }
-
-    // Render the state of the game using platform functions
-    public function renderGame():Void
-    {
-        //if (mRefreshFrames > 0)
-        //{
-            //if (--mRefreshFrames == 0)
-            //{
-                //mGame.stateChanged = true;
-            //}
-        //}
-//
-        //// Don't draw if it's not necessary
-        //if (mGame.stateChanged)
-        //{
-            //var i:Int, j:Int;
-//
-            //// Clear background
-            //mCanvasBlocks.graphics.clear();
-//
-            //// Draw preview block
-            //if (mGame.showPreview)
-            //{
-                //for (i in 0 ... 4)
-                //{
-                    //for (j in 0 ... 4)
-                    //{
-                        //if (mGame.nextBlock.cells[i][j] != Game.EMPTY_CELL)
-                        //{
-                            //drawTile(PREVIEW_X + (TILE_SIZE * i),
-                                    //PREVIEW_Y + (TILE_SIZE * j), mGame.nextBlock.cells[i][j]);
-                        //}
-                    //}
-                //}
-            //}
-//
-            //// Draw shadow tetromino
-            //if (mGame.showShadow && mGame.shadowGap > 0)
-            //{
-                //for (i in 0 ... 4)
-                //{
-                    //for (j in 0 ... 4)
-                    //{
-                        //if (mGame.fallingBlock.cells[i][j] != Game.EMPTY_CELL)
-                        //{
-                            //drawTile(BOARD_X + (TILE_SIZE * (mGame.fallingBlock.x + i)),
-                                    //BOARD_Y + (TILE_SIZE * (mGame.fallingBlock.y + mGame.shadowGap + j)),
-                                    //mGame.fallingBlock.cells[i][j], 1);
-                        //}
-                    //}
-                //}
-            //}
-//
-            //// Draw the cells in the board
-            //if (mGame.getMasterMode())
-            //{
-                //if (mRefreshBoard)
-                //{
-                    //for (i in 0 ... Game.BOARD_WIDTH)
-                    //{
-                        //for (j in 0 ... Game.BOARD_HEIGHT)
-                        //{
-                            //if (mGame.map[i][j] != Game.EMPTY_CELL)
-                            //{
-                                //drawTile(BOARD_X + (TILE_SIZE * i),
-                                        //BOARD_Y + (TILE_SIZE * j), mGame.map[i][j]);
-                            //}
-                        //}
-                    //}
-                    //mRefreshBoard = false;
-                    //mRefreshFrames = 10;
-                //}
-            //}
-            //else
-            //{
-                //for (i in 0 ... Game.BOARD_WIDTH)
-                //{
-                    //for (j in 0 ... Game.BOARD_HEIGHT)
-//
-                    //{
-                        //if (mGame.map[i][j] != Game.EMPTY_CELL)
-                        //{
-                            //drawTile(BOARD_X + (TILE_SIZE * i),
-                                    //BOARD_Y + (TILE_SIZE * j), mGame.map[i][j]);
-                        //}
-                    //}
-                //}
-            //}
-//
-            //// Draw falling tetromino
-            //for (i in 0 ... 4)
-            //{
-                //for (j in 0 ... 4)
-                //{
-                    //if (mGame.fallingBlock.cells[i][j] != Game.EMPTY_CELL)
-                    //{
-                        //drawTile(BOARD_X + (TILE_SIZE * (mGame.fallingBlock.x + i)),
-                                //BOARD_Y + (TILE_SIZE * (mGame.fallingBlock.y + j)),
-                                //mGame.fallingBlock.cells[i][j]);
-                    //}
-                //}
-            //}
-            //mGame.stateChanged = false;
-        //}
-//
-        //// Update game statistic data
-        //if (mGame.scoreChanged)
-        //{
-            //mCanvasNumbers.graphics.clear();
-//
-            //drawNumber(LEVEL_X, LEVEL_Y, mGame.stats.level, LEVEL_LENGTH, Game.COLOR_WHITE);
-            //drawNumber(LINES_X, LINES_Y, mGame.stats.lines, LINES_LENGTH, Game.COLOR_WHITE);
-            //drawNumber(SCORE_X, SCORE_Y, Std.int(mGame.stats.score), SCORE_LENGTH, Game.COLOR_WHITE);
-//
-            //drawNumber(TETROMINO_X, TETROMINO_L_Y, mGame.stats.pieces[Game.TETROMINO_L], TETROMINO_LENGTH, Game.COLOR_ORANGE);
-            //drawNumber(TETROMINO_X, TETROMINO_I_Y, mGame.stats.pieces[Game.TETROMINO_I], TETROMINO_LENGTH, Game.COLOR_CYAN);
-            //drawNumber(TETROMINO_X, TETROMINO_T_Y, mGame.stats.pieces[Game.TETROMINO_T], TETROMINO_LENGTH, Game.COLOR_PURPLE);
-            //drawNumber(TETROMINO_X, TETROMINO_S_Y, mGame.stats.pieces[Game.TETROMINO_S], TETROMINO_LENGTH, Game.COLOR_GREEN);
-            //drawNumber(TETROMINO_X, TETROMINO_Z_Y, mGame.stats.pieces[Game.TETROMINO_Z], TETROMINO_LENGTH, Game.COLOR_RED);
-            //drawNumber(TETROMINO_X, TETROMINO_O_Y, mGame.stats.pieces[Game.TETROMINO_O], TETROMINO_LENGTH, Game.COLOR_YELLOW);
-            //drawNumber(TETROMINO_X, TETROMINO_J_Y, mGame.stats.pieces[Game.TETROMINO_J], TETROMINO_LENGTH, Game.COLOR_BLUE);
-//
-            //drawNumber(PIECES_X, PIECES_Y, mGame.stats.totalPieces, PIECES_LENGTH, Game.COLOR_WHITE);
-            //mGame.scoreChanged = false;
-        //}
-    }
-
-	private function resize(event:Event):Void
+    private function resize(event:Event):Void
     {
         var sx:Float = current.stage.stageWidth / SCREEN_WIDTH;
         var sy:Float = current.stage.stageHeight / SCREEN_HEIGHT;
@@ -586,7 +215,7 @@ class Platform extends Sprite
         {
             this.scaleX = this.scaleY = sx;
         }
-	}
+    }
 
     public static function drawBox(canvas:Sprite,
                                    iniX:Int,
@@ -608,14 +237,91 @@ class Platform extends Sprite
         canvas.graphics.endFill();
     }
 
-	// Entry point
-	public static function main()
+    private function setTimerText( time:Int, text:TextField ):Void
+    {
+        var ms:Int = Std.int( ( time % 1000 ) / 10 );
+        var mm:Int = Std.int( time / 60000 );
+        var ss:Int = Std.int( ( time % 60000 ) / 1000 );
+        text.text = formatDigits( mm ) + ":" + formatDigits( ss ) + ":" + formatDigits( ms );
+    }
+
+    private inline function formatDigits( digits:Int ):String
+    {
+        return ( digits > 9 ) ? Std.string( digits ) : "0" + digits;
+    }
+
+    private function resetTimers():Void
+    {
+        var time:Int = 300000 * ( m_initTimer + 1 );
+        m_timerDown = m_timerUp = time;
+        setTimerText( time, m_textUp );
+        setTimerText( time, m_textDown );
+    }
+
+    public function onStart():Void
+    {
+        m_state = ST_DOWN_ACTIVE;
+        m_soundClick.play( 0, 0, new SoundTransform( SOUND_VOLUME ) );
+        m_bmpPause.visible = false;
+    }
+
+    private function onRestart():Void
+    {
+        resetTimers();
+        m_state = ST_START;
+    }
+
+    private function onPaused():Void
+    {
+        if ( m_state != ST_PAUSED )
+        {
+            m_oldState = m_state;
+            m_state = ST_PAUSED;
+            m_bmpPause.visible = true;
+        }
+        else
+        {
+            m_state = m_oldState;
+            m_bmpPause.visible = false;
+        }
+        m_soundClick.play( 0, 0, new SoundTransform( SOUND_VOLUME ) );
+    }
+
+    // Entry point
+    public static function main():Void
     {
 #if (flash9 || flash10)
         haxe.Log.trace = function(v,?pos) { untyped __global__["trace"](pos.className+"#"+pos.methodName+"("+pos.lineNumber+"):",v); }
 #elseif flash
         haxe.Log.trace = function(v,?pos) { flash.Lib.trace(pos.className+"#"+pos.methodName+"("+pos.lineNumber+"): "+v); }
 #end
-		current.addChild(new Platform());
-	}
+        current.addChild(new Platform());
+    }
+
+    private static inline var ST_START:Int = 0;
+    private static inline var ST_PAUSED:Int = 1;
+    private static inline var ST_TOP_ACTIVE:Int = 2;
+    private static inline var ST_DOWN_ACTIVE:Int = 3;
+
+    private var m_soundTouch:Sound;
+    private var m_soundClick:Sound;
+
+    private var m_bmpPause:Bitmap;
+
+    private var m_padTop:Sprite;
+    private var m_padDown:Sprite;
+    private var m_padPause:Sprite;
+    private var m_padRestart:Sprite;
+    private var m_padNext:Sprite;
+
+    private var m_textUp:TextField;
+    private var m_textDown:TextField;
+
+    private var m_timerUp:Int;
+    private var m_timerDown:Int;
+    private var m_initTimer:Int;
+    private var m_systemTime:Float;
+
+    private var m_state:Int;
+    private var m_oldState:Int;
 }
