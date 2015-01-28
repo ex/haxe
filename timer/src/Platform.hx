@@ -55,6 +55,9 @@ class Platform extends Sprite
         // Load background and add it to scene
         addChild( new Bitmap( Assets.getBitmapData( "assets/images/back.png", false ) ) );
 
+        m_canvasProgress = new Sprite();
+        addChild( m_canvasProgress );
+
         m_bmpPause = new Bitmap( Assets.getBitmapData( "assets/images/top.png", false ) );
         addChild( m_bmpPause );
 
@@ -64,18 +67,21 @@ class Platform extends Sprite
         textFormat.font = font.fontName;
         textFormat.size = 70;
         textFormat.letterSpacing = 3;
-        textFormat.color = 0xFFFFFFFF;
+        textFormat.color = 0xFFFFFF;
         textFormat.align = TextFormatAlign.LEFT;
 
+        var top:Sprite = new Sprite();
+        top.rotation = 180;
+        addChild( top );
         m_textUp = new TextField();
         m_textUp.embedFonts = true;
         m_textUp.selectable = false;
         m_textUp.defaultTextFormat = textFormat;
         m_textUp.width = SCREEN_WIDTH;
-        addChild(m_textUp);
+        top.addChild(m_textUp);
         m_textUp.text = "00:00:00";
-        m_textUp.x = 30;
-        m_textUp.y = 0.25 * SCREEN_HEIGHT - m_textUp.textHeight / 2;
+        m_textUp.x = -298;
+        m_textUp.y = -( 0.25 * SCREEN_HEIGHT + m_textUp.textHeight / 2 );
 
         m_textDown = new TextField();
         m_textDown.embedFonts = true;
@@ -98,14 +104,14 @@ class Platform extends Sprite
         // Add control pads
         var alphaPad:Float = 0;
         m_padTop = new Sprite();
-        drawBox(m_padTop, 0, 0, 320, 285, 0x00FFFF, alphaPad);
+        drawBox(m_padTop, 0, 0, 320, 300, 0x00FFFF, alphaPad);
         m_padTop.x = 0;
-        m_padTop.y = -55;
+        m_padTop.y = -70;
         addChild(m_padTop);
         m_padTop.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownPads);
 
         m_padDown = new Sprite();
-        drawBox(m_padDown, 0, 0, 320, 285, 0xFF00FF, alphaPad);
+        drawBox(m_padDown, 0, 0, 320, 300, 0xFF00FF, alphaPad);
         m_padDown.x = 0;
         m_padDown.y = 250;
         addChild(m_padDown);
@@ -194,26 +200,38 @@ class Platform extends Sprite
         {
             case ST_DOWN_ACTIVE:
                 m_timerDown -= timeDelta;
+                if ( m_timerDown <= 0 )
+                {
+                    m_timerDown = 0;
+                    m_state = ST_END;
+                }
                 setTimerText( m_timerDown, m_textDown );
 
             case ST_TOP_ACTIVE:
                 m_timerUp -= timeDelta;
+                if ( m_timerUp <= 0 )
+                {
+                    m_timerUp = 0;
+                    m_state = ST_END;
+                }
                 setTimerText( m_timerUp, m_textUp );
         }
     }
 
-    private function resize(event:Event):Void
+    private function resize( event:Event ):Void
     {
         var sx:Float = current.stage.stageWidth / SCREEN_WIDTH;
         var sy:Float = current.stage.stageHeight / SCREEN_HEIGHT;
-        if (sx > sy)
+
+        if ( sx > sy )
         {
             this.scaleX = this.scaleY = sy;
-            this.x = (current.stage.stageWidth - sy * SCREEN_WIDTH) / 2;
+            this.x = ( current.stage.stageWidth - sy * SCREEN_WIDTH ) / 2;
         }
         else
         {
             this.scaleX = this.scaleY = sx;
+            this.y = ( current.stage.stageHeight - sx * SCREEN_HEIGHT ) / 2;
         }
     }
 
@@ -252,7 +270,7 @@ class Platform extends Sprite
 
     private function resetTimers():Void
     {
-        var time:Int = 300000 * ( m_initTimer + 1 );
+        var time:Int = 3000 * ( m_initTimer + 1 );
         m_timerDown = m_timerUp = time;
         setTimerText( time, m_textUp );
         setTimerText( time, m_textDown );
@@ -302,11 +320,13 @@ class Platform extends Sprite
     private static inline var ST_PAUSED:Int = 1;
     private static inline var ST_TOP_ACTIVE:Int = 2;
     private static inline var ST_DOWN_ACTIVE:Int = 3;
+    private static inline var ST_END:Int = 4;
 
     private var m_soundTouch:Sound;
     private var m_soundClick:Sound;
 
     private var m_bmpPause:Bitmap;
+    private var m_canvasProgress:Sprite;
 
     private var m_padTop:Sprite;
     private var m_padDown:Sprite;
