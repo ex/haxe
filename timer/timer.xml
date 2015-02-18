@@ -31,4 +31,9 @@
 		<sound path="fx_button.ogg" id="fx_click" />
 	</assets>
 
+	<assets path="assets/sounds" if="cpp">
+		<sound path="fx_line.wav" id="fx_touch" />
+		<sound path="fx_button.wav" id="fx_click" />
+	</assets>
+	
 </project>

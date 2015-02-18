@@ -270,7 +270,7 @@ class Platform extends Sprite
 
     private function resetTimers():Void
     {
-        var time:Int = 3000 * ( m_initTimer + 1 );
+        var time:Int = 300000 * ( m_initTimer + 1 );
         m_timerDown = m_timerUp = time;
         setTimerText( time, m_textUp );
         setTimerText( time, m_textDown );
