@@ -65,7 +65,7 @@ class Platform extends Sprite
 
         var textFormat:TextFormat = new TextFormat();
         textFormat.font = font.fontName;
-        textFormat.size = 70;
+        textFormat.size = 60;
         textFormat.letterSpacing = 3;
         textFormat.color = 0xFFFFFF;
         textFormat.align = TextFormatAlign.LEFT;
@@ -80,7 +80,7 @@ class Platform extends Sprite
         m_textUp.width = SCREEN_WIDTH;
         top.addChild(m_textUp);
         m_textUp.text = "00:00:00";
-        m_textUp.x = -298;
+        m_textUp.x = -( SCREEN_WIDTH + m_textUp.textWidth ) / 2;
         m_textUp.y = -( 0.25 * SCREEN_HEIGHT + m_textUp.textHeight / 2 );
 
         m_textDown = new TextField();
@@ -90,7 +90,7 @@ class Platform extends Sprite
         m_textDown.width = SCREEN_WIDTH;
         addChild(m_textDown);
         m_textDown.text = "00:00:00";
-        m_textDown.x = 30;
+        m_textDown.x = ( SCREEN_WIDTH - m_textDown.textWidth ) / 2;
         m_textDown.y = 0.75 * SCREEN_HEIGHT - m_textUp.textHeight / 2;
 
         // Registering events
@@ -138,10 +138,13 @@ class Platform extends Sprite
         addChild(m_padNext);
         m_padNext.addEventListener(MouseEvent.CLICK, onMouseDownPads);
 
+        m_progressUp = new ProgressBar( top, m_textUp.x, m_textUp.y + 70, m_textUp.x + m_textUp.textWidth, 10, 0xFF7777, 0x770000 );
+        m_progressDown = new ProgressBar( m_canvasProgress, m_textDown.x, m_textDown.y + 70, m_textDown.x + m_textDown.textWidth, 10, 0x7777FF, 0x000077 );
+
         resetTimers();
     }
 
-    public function onMouseDownPads(event:MouseEvent):Void
+    public function onMouseDownPads( event:MouseEvent ):Void
     {
         if ( event.target == m_padTop )
         {
@@ -206,6 +209,7 @@ class Platform extends Sprite
                     m_state = ST_END;
                 }
                 setTimerText( m_timerDown, m_textDown );
+                m_progressDown.set( m_timerDown / m_time );
 
             case ST_TOP_ACTIVE:
                 m_timerUp -= timeDelta;
@@ -215,6 +219,7 @@ class Platform extends Sprite
                     m_state = ST_END;
                 }
                 setTimerText( m_timerUp, m_textUp );
+                m_progressUp.set( m_timerUp / m_time );
         }
     }
 
@@ -235,23 +240,21 @@ class Platform extends Sprite
         }
     }
 
-    public static function drawBox(canvas:Sprite,
-                                   iniX:Int,
-                                   iniY:Int,
-                                   width:Int,
-                                   height:Int,
-                                   colorBody:Int,
-                                   alphaBody:Float = 1.0,
-                                   borderSize:Float = 0,
-                                   colorBorder:Int = 0,
-                                   borderAlpha:Float = 0):Void
+    public static function drawBox( canvas:Sprite,
+                                    iniX:Float, iniY:Float,
+                                    width:Float, height:Float,
+                                    colorBody:Int,
+                                    alphaBody:Float = 1.0,
+                                    borderSize:Float = 0,
+                                    colorBorder:Int = 0,
+                                    borderAlpha:Float = 0 ):Void
     {
-        canvas.graphics.lineStyle(borderSize, colorBorder, borderAlpha);
-        canvas.graphics.beginFill(colorBody, alphaBody);
-        canvas.graphics.moveTo(iniX, iniY);
-        canvas.graphics.lineTo(iniX, iniY + height);
-        canvas.graphics.lineTo(iniX + width, iniY + height);
-        canvas.graphics.lineTo(iniX + width, iniY);
+        canvas.graphics.lineStyle( borderSize, colorBorder, borderAlpha );
+        canvas.graphics.beginFill( colorBody, alphaBody );
+        canvas.graphics.moveTo( iniX, iniY );
+        canvas.graphics.lineTo( iniX, iniY + height );
+        canvas.graphics.lineTo( iniX + width, iniY + height );
+        canvas.graphics.lineTo( iniX + width, iniY );
         canvas.graphics.endFill();
     }
 
@@ -270,10 +273,13 @@ class Platform extends Sprite
 
     private function resetTimers():Void
     {
-        var time:Int = 300000 * ( m_initTimer + 1 );
-        m_timerDown = m_timerUp = time;
-        setTimerText( time, m_textUp );
-        setTimerText( time, m_textDown );
+        m_time = 300000 * ( m_initTimer + 1 );
+        m_timerDown = m_timerUp = m_time;
+        setTimerText( m_time, m_textUp );
+        setTimerText( m_time, m_textDown );
+
+        m_progressUp.set( 1 );
+        m_progressDown.set( 1 );
     }
 
     public function onStart():Void
@@ -337,6 +343,7 @@ class Platform extends Sprite
     private var m_textUp:TextField;
     private var m_textDown:TextField;
 
+    private var m_time:Int;
     private var m_timerUp:Int;
     private var m_timerDown:Int;
     private var m_initTimer:Int;
@@ -344,4 +351,45 @@ class Platform extends Sprite
 
     private var m_state:Int;
     private var m_oldState:Int;
+
+    private var m_progressUp:ProgressBar;
+    private var m_progressDown:ProgressBar;
+}
+
+//-------------------------------------------------------------------------------
+class ProgressBar
+{
+
+    public function new( canvas:Sprite, x0:Float, y0:Float, x1:Float, height:Float, color:Int, backColor:Int )
+    {
+        m_canvas = canvas;
+        m_color = color;
+        m_backColor = backColor;
+        m_x = x0;
+        m_y = y0;
+        m_width = x1 - x0;
+        m_height = height + 6;
+    }
+
+    public function set( percent:Float )
+    {
+        Platform.drawBox( m_canvas, m_x - 3, m_y - 3, m_width + 6, m_height + 6, m_color );
+        //if ( percent < 1 )
+        {
+            Platform.drawBox( m_canvas, m_x + percent * m_width, m_y, ( 1 - percent ) * m_width, m_height, m_backColor );
+        }
+    }
+
+    public function free()
+    {
+        m_canvas = null;
+    }
+
+    private var m_x:Float;
+    private var m_y:Float;
+    private var m_width:Float;
+    private var m_height:Float;
+    private var m_canvas:Sprite;
+    private var m_color:Int;
+    private var m_backColor:Int;
 }
