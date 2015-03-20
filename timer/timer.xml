@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	<!-- metadata, make sure 'package' is at least 2 segments (ie. com.myproject) -->
-	<app file="timer" title="timer-openfl" main="Platform" package="com.ex.timer" version="1.0.0" company="" />
+	<app file="ChessTimer" title="Chess Timer" main="ChessTimer" package="com.ex.ChessTimer" version="1.0.0" company="Kontiky LABS" />
 
 	<!-- output -->
     <window width="320" height="480" if="desktop" />
     <window width="320" height="480" if="flash" />
 	<window fps="60" />
 	<window orientation="portrait" />
+	<window background="0x000000" />
 
 	<set name="BUILD_DIR" value="bin" />
 
@@ -16,7 +17,7 @@
 	<haxelib name="openfl" />
 
 	<!-- assets -->
-	<icon name="assets/nme.svg" />
+	<icon name="assets/openfl.svg" />
 
 	<assets path="assets/fonts" include="*.otf" />
 	<assets path="assets/images" include="*" />
@@ -35,5 +36,5 @@
 		<sound path="fx_line.wav" id="fx_touch" />
 		<sound path="fx_button.wav" id="fx_click" />
 	</assets>
-	
+
 </project>

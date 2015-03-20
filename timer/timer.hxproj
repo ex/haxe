@@ -11,7 +11,7 @@
     <movie version="1" />
     <movie minorVersion="0" />
     <movie platform="Lime" />
-    <movie background="FFFFFF" />
+    <movie background="000000" />
     <movie preferredSDK=";3;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -29,7 +29,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--remap flash:openfl&#xA;#--macro keep(&quot;Platform&quot;)" />
+    <option additional="--remap flash:openfl&#xA;#--macro keep(&quot;ChessTimer&quot;)" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

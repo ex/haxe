@@ -26,7 +26,7 @@ import openfl.text.TextField;
 import openfl.text.TextFormat;
 import openfl.text.TextFormatAlign;
 
-class Platform extends Sprite
+class ChessTimer extends Sprite
 {
     private static inline var SCREEN_WIDTH:Int = 320;
     private static inline var SCREEN_HEIGHT:Int = 480;
@@ -319,7 +319,7 @@ class Platform extends Sprite
 #elseif flash
         haxe.Log.trace = function(v,?pos) { flash.Lib.trace(pos.className+"#"+pos.methodName+"("+pos.lineNumber+"): "+v); }
 #end
-        current.addChild(new Platform());
+        current.addChild( new ChessTimer() );
     }
 
     private static inline var ST_START:Int = 0;
@@ -373,10 +373,10 @@ class ProgressBar
 
     public function set( percent:Float )
     {
-        Platform.drawBox( m_canvas, m_x - 3, m_y - 3, m_width + 6, m_height + 6, m_color );
+        ChessTimer.drawBox( m_canvas, m_x - 3, m_y - 3, m_width + 6, m_height + 6, m_color );
         //if ( percent < 1 )
         {
-            Platform.drawBox( m_canvas, m_x + percent * m_width, m_y, ( 1 - percent ) * m_width, m_height, m_backColor );
+            ChessTimer.drawBox( m_canvas, m_x + percent * m_width, m_y, ( 1 - percent ) * m_width, m_height, m_backColor );
         }
     }
 
