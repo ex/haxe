@@ -17,10 +17,10 @@
 	<haxelib name="openfl" />
 
 	<!-- assets -->
-	<icon name="assets/openfl.svg" />
+	<icon name="assets/timer.svg" />
 
-	<assets path="assets/fonts" include="*.otf" />
-	<assets path="assets/images" include="*" />
+	<assets path="assets/fonts" include="*" />
+	<assets path="assets/images" include="*.png" />
 
 	<assets path="assets/sounds" if="flash">
 		<sound path="fx_line.mp3" id="fx_touch" />
