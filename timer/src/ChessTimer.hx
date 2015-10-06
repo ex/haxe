@@ -142,6 +142,16 @@ class ChessTimer extends Sprite
         m_progressDown = new ProgressBar( m_canvasProgress, m_textDown.x, m_textDown.y + 70, m_textDown.x + m_textDown.textWidth, 10, 0x7777FF, 0x000077 );
 
         resetTimers();
+
+        var dummies:Array<Dummy> = new Array<Dummy>();
+        for ( k in 1 ... 200000 )
+        {
+            dummies.push( new Dummy() );
+            if ( k % 1000 == 0 )
+            {
+                trace( "k: " + k );
+            }
+        }
     }
 
     public function onMouseDownPads( event:MouseEvent ):Void
@@ -392,4 +402,48 @@ class ProgressBar
     private var m_canvas:Sprite;
     private var m_color:Int;
     private var m_backColor:Int;
+}
+
+//-------------------------------------------------------------------------------
+class Dummy
+{
+    public function new()
+    {
+        var strXml:String = Assets.getText( "assets/xml/config.xml" );
+        var xml:Xml = Xml.parse( strXml ).firstElement();
+
+        m_data = new Array<DummyData>();
+        for ( node in xml.elements() )
+        {
+            var param1:String = null;
+            var param2:String = null;
+            for ( data in node.elements() )
+            {
+                if ( data.nodeName == "a" )
+                {
+                    param1 = data.firstChild().nodeValue;
+                }
+                if ( data.nodeName == "s" )
+                {
+                    param2 = data.firstChild().nodeValue;
+                }
+            }
+            m_data.push( new DummyData( param1, param2 ) );
+        }
+    }
+
+    private var m_data:Array<DummyData>;
+}
+
+class DummyData
+{
+    public var number:Int;
+    public var string:String;
+
+    public function new( param1:String, param2:String )
+    {
+        number = Std.parseInt( param1 );
+        string = param2;
+        //trace( number + ": " + string );
+    }
 }
