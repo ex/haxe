@@ -12,9 +12,6 @@
 
 	<set name="BUILD_DIR" value="bin" />
 
-    <set name="legacy"/>
-    <haxedef name="HXCPP_DEBUG_LINK"/>
-
 	<!-- classpath, haxe libs -->
 	<classpath name="src" />
 	<haxelib name="openfl" />
@@ -22,7 +19,6 @@
 	<!-- assets -->
 	<icon name="assets/timer.svg" />
 
-	<assets path="assets/xml" include="*.xml" />
 	<assets path="assets/fonts" include="*" />
 	<assets path="assets/images" include="*.png" />
 
