@@ -12,7 +12,7 @@ class Main
         var dummies:Array<Dummy> = new Array<Dummy>();
         var dummy:Dummy = null;
 
-        for ( k in 1 ... 200000 )
+        for ( k in 1 ... 400000 )
         {
             dummy = new Dummy();
             if ( USE_XML )
@@ -25,6 +25,7 @@ class Main
                 trace( "k: " + k );
             }
         }
+        while ( true ) { };
 	}
 }
 
