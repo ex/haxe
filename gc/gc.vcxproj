@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{39C7A469-2D58-4AFB-A3A3-EEC7E4056F0B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>power</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\d\bamtang\swit\rangers\build\src\bin\windows\cpp\obj\include;C:\d\bamtang\swit\openfl\extensions_201506\hxcpp\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;HXCPP_DEBUG_LINK;HXCPP_STACK_LINE;HXCPP_STACK_TRACE;_final;desktop;disable_legacy_networking;haxe3;native;soundchannel_events_disabled;swt_blending_mode;swt_disable_audio_poll;swt_disable_audio_poll2;swt_disable_urlloader;swt_display_fps;swt_display_meminfo;swt_enable_mouse_listeners;swt_fixed_soundqueue;swt_force_assert;swt_log_level;swt_map_action_indexes;swt_no_boundingbox;swt_no_live_reload;swt_npc_vector;swt_openfl_displayobject_stack;swt_openfl_soundchannel_shift;swt_rectangle_collision;swt_reduce_drawtiles;swt_test_effects;swt_use_bind_bitmap_data_texture;swt_use_fake_lights;swt_use_joystick;swt_use_joystick_analog;swt_use_shaders;swt_use_thread_loader;windows;HXCPP_VISIT_ALLOCS;HXCPP_API_LEVEL=321;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>HX_UNDEFINE_H;HX_DECLARE_MAIN;HX_WINDOWS;_USING_V140_SDK71_;HXCPP_DEBUG;HXCPP_VISIT_ALLOCS;HXCPP_CHECK_POINTER;HXCPP_GC_CHECK_POINTER;HXCPP_API_LEVEL=321;_CRT_SECURE_NO_DEPRECATE;_ALLOW_MSC_VER_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HXCPP_M64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>obj\include;$(HXCPP_PATH)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/FS /c /wd4996 %(AdditionalOptions)</AdditionalOptions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <OmitFramePointers>false</OmitFramePointers>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope />
+      <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ErrorReporting />
+      <WarningLevel>Level2</WarningLevel>
+      <TreatWChar_tAsBuiltInType />
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="$(HXCPP_PATH)\include\Array.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\cpp\CppInt32__.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\cpp\FastIterator.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\cpp\Pointer.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\Dynamic.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\Enum.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hxcpp.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hxMath.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hxString.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Anon.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Boot.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFI.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFIAPI.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFIJsPrime.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFILoader.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFINekoLoader.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFIPrime.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Class.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Debug.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\DynamicImpl.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\ErrorCodes.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\FieldRef.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Functions.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\GC.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\GcTypeInference.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\HxcppMain.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\IndexRef.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Interface.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Macros.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\NekoFunc.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Object.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Operators.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\OS.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Scriptable.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\StdLibs.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Telemetry.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Thread.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Tls.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Undefine.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Unordered.h" />
+    <ClInclude Include="$(HXCPP_PATH)\include\null.h" />
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\AbcOpCodes.h" />
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\gc\GcRegCapture.h" />
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\Hash.h" />
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\QuickVec.h" />
+    <ClInclude Include="obj\include\cpp\Lib.h" />
+    <ClInclude Include="obj\include\Dummy.h" />
+    <ClInclude Include="obj\include\DummyData.h" />
+    <ClInclude Include="obj\include\haxe\ds\StringMap.h" />
+    <ClInclude Include="obj\include\haxe\IMap.h" />
+    <ClInclude Include="obj\include\haxe\io\Bytes.h" />
+    <ClInclude Include="obj\include\haxe\io\Eof.h" />
+    <ClInclude Include="obj\include\haxe\io\Error.h" />
+    <ClInclude Include="obj\include\haxe\Log.h" />
+    <ClInclude Include="obj\include\haxe\xml\Parser.h" />
+    <ClInclude Include="obj\include\Main.h" />
+    <ClInclude Include="obj\include\Std.h" />
+    <ClInclude Include="obj\include\StringBuf.h" />
+    <ClInclude Include="obj\include\sys\io\File.h" />
+    <ClInclude Include="obj\include\Xml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(HXCPP_PATH)\src\Array.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\Dynamic.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\Enum.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Anon.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Boot.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\CFFI.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Class.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Date.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Debug.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\gc\GcCommon.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\gc\GcRegCapture.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\gc\Immix.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Hash.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Interface.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Lib.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)/hxcpp/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Object.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\StdLibs.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Thread.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\Math.cpp" />
+    <ClCompile Include="$(HXCPP_PATH)\src\String.cpp" />
+    <ClCompile Include="obj\src\cpp\Lib.cpp" />
+    <ClCompile Include="obj\src\Dummy.cpp" />
+    <ClCompile Include="obj\src\DummyData.cpp" />
+    <ClCompile Include="obj\src\haxe\ds\StringMap.cpp" />
+    <ClCompile Include="obj\src\haxe\IMap.cpp" />
+    <ClCompile Include="obj\src\haxe\io\Bytes.cpp" />
+    <ClCompile Include="obj\src\haxe\io\Eof.cpp" />
+    <ClCompile Include="obj\src\haxe\io\Error.cpp" />
+    <ClCompile Include="obj\src\haxe\Log.cpp" />
+    <ClCompile Include="obj\src\haxe\xml\Parser.cpp" />
+    <ClCompile Include="obj\src\Main.cpp" />
+    <ClCompile Include="obj\src\Std.cpp" />
+    <ClCompile Include="obj\src\StringBuf.cpp" />
+    <ClCompile Include="obj\src\sys\io\File.cpp" />
+    <ClCompile Include="obj\src\Xml.cpp" />
+    <ClCompile Include="obj\src\__boot__.cpp" />
+    <ClCompile Include="obj\src\__files__.cpp" />
+    <ClCompile Include="obj\src\__main__.cpp" />
+    <ClCompile Include="obj\src\__resources__.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

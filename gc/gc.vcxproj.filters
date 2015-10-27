@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="hxcpp">
+      <UniqueIdentifier>{00353ca3-cc6d-4a39-8d7e-9bf06caef6b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hxcpp\include">
+      <UniqueIdentifier>{06ba762e-b6d0-4c48-bd3b-b1de5bb6903a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hxcpp\include\cpp">
+      <UniqueIdentifier>{2c4c54a6-b23e-43dc-8093-ef3ac6a55587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hxcpp\include\hx">
+      <UniqueIdentifier>{5755f8b8-cb24-4b34-80e7-b3632b49ead8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hxcpp\src">
+      <UniqueIdentifier>{008e46c1-f2c5-4dc9-804b-0c8e5e7f3e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hxcpp\src\hx">
+      <UniqueIdentifier>{2bced764-f47b-4699-ad4b-9a2fc5c3f99e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hxcpp\src\hx\gc">
+      <UniqueIdentifier>{5b4101b6-79ea-4cae-a8a2-c04afd86e066}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="obj\include\Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\Std.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\StringBuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\Xml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\cpp\Lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\ds\StringMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\IMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\io\Bytes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\io\Eof.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\io\Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\haxe\xml\Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\sys\io\File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\Dummy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\include\DummyData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hxMath.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hxString.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\null.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\Array.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\Dynamic.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\Enum.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hxcpp.h">
+      <Filter>hxcpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\cpp\FastIterator.h">
+      <Filter>hxcpp\include\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\cpp\Pointer.h">
+      <Filter>hxcpp\include\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\cpp\CppInt32__.h">
+      <Filter>hxcpp\include\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Functions.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\GC.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\GcTypeInference.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\HxcppMain.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\IndexRef.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Interface.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Macros.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\NekoFunc.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Object.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Operators.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\OS.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Scriptable.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\StdLibs.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Telemetry.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Thread.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Tls.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Undefine.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Unordered.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Anon.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Boot.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFI.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFIAPI.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFIJsPrime.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFILoader.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFINekoLoader.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\CFFIPrime.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Class.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\Debug.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\DynamicImpl.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\ErrorCodes.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\include\hx\FieldRef.h">
+      <Filter>hxcpp\include\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\Hash.h">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\QuickVec.h">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\AbcOpCodes.h">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HXCPP_PATH)\src\hx\gc\GcRegCapture.h">
+      <Filter>hxcpp\src\hx\gc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="obj\src\__main__.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\__resources__.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\Dummy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\DummyData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\Std.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\StringBuf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\Xml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\cpp\Lib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\ds\StringMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\IMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\io\Bytes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\io\Eof.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\io\Error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\haxe\xml\Parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\sys\io\File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\__boot__.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\src\__files__.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\Math.cpp">
+      <Filter>hxcpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\String.cpp">
+      <Filter>hxcpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\Array.cpp">
+      <Filter>hxcpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\Dynamic.cpp">
+      <Filter>hxcpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\Enum.cpp">
+      <Filter>hxcpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Hash.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Interface.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Object.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\StdLibs.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Thread.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Anon.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Boot.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\CFFI.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Class.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Date.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Debug.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\gc\Immix.cpp">
+      <Filter>hxcpp\src\hx\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\gc\GcCommon.cpp">
+      <Filter>hxcpp\src\hx\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\gc\GcRegCapture.cpp">
+      <Filter>hxcpp\src\hx\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="$(HXCPP_PATH)\src\hx\Lib.cpp">
+      <Filter>hxcpp\src\hx</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
