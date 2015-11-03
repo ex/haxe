@@ -335,5 +335,6 @@
     <ClCompile Include="$(HXCPP_PATH)\src\hx\Lib.cpp">
       <Filter>hxcpp\src\hx</Filter>
     </ClCompile>
+    <ClCompile Include="test.h" />
   </ItemGroup>
 </Project>

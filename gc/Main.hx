@@ -2,13 +2,15 @@
 package;
 
 import sys.io.File;
+import haxe.Timer;
 
 class Main
 {
-    public static inline var USE_XML:Bool = true;
+    public static inline var USE_XML:Bool = false;
 
 	public static function main():Void
     {
+        var t0 = stamp();
         var dummies:Array<Dummy> = new Array<Dummy>();
         var dummy:Dummy = null;
 
@@ -20,13 +22,24 @@ class Main
                 dummy.init();
             }
             dummies.push( dummy );
-            if ( k % 1000 == 0 )
+            if ( k % 10000 == 0 )
             {
                 trace( "k: " + k );
             }
         }
+        var ms:Float = Math.round( (stamp() - t0) * 1000000.0 ) / 1000.0;
+        trace( "\nTIMING: " + ms );
         while ( true ) { };
 	}
+
+    public static inline function stamp() : Float
+    {
+#if cpp
+        return untyped __global__.__time_stamp();
+#else
+        return 0;
+#end
+    }
 }
 
 class Dummy
@@ -37,9 +50,12 @@ class Dummy
 
         if ( !Main.USE_XML )
         {
+            var dummyData:DummyData = null;
             for ( k in 1 ... 15 )
             {
-                m_data.push( new DummyData() );
+                dummyData = new DummyData();
+                m_data.push( dummyData );
+                m_counter += ( m_counter % 2 == 0 ) ? dummyData.number : -dummyData.number;
             }
         }
     }
@@ -72,6 +88,7 @@ class Dummy
     }
 
     private var m_data:Array<DummyData>;
+    private static var m_counter:Int;
 }
 
 class DummyData

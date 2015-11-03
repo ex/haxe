@@ -100,7 +100,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>HX_UNDEFINE_H;HX_DECLARE_MAIN;HX_WINDOWS;_USING_V140_SDK71_;HXCPP_DEBUG;HXCPP_VISIT_ALLOCS;HXCPP_CHECK_POINTER;HXCPP_GC_CHECK_POINTER;HXCPP_API_LEVEL=321;_CRT_SECURE_NO_DEPRECATE;_ALLOW_MSC_VER_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HXCPP_M64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HX_UNDEFINE_H;HX_DECLARE_MAIN;HX_WINDOWS;_USING_V140_SDK71_;HXCPP_DEBUG;HXCPP_VISIT_ALLOCS;HXCPP_CHECK_POINTER;HXCPP_GC_CHECK_POINTER;HXCPP_API_LEVEL=321;_CRT_SECURE_NO_DEPRECATE;_ALLOW_MSC_VER_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HXCPP_M64;HXCPP_GC_MOVING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>obj\include;$(HXCPP_PATH)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/FS /c /wd4996 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -260,6 +260,7 @@
     <ClCompile Include="obj\src\__files__.cpp" />
     <ClCompile Include="obj\src\__main__.cpp" />
     <ClCompile Include="obj\src\__resources__.cpp" />
+    <ClCompile Include="test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
