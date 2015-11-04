@@ -29,7 +29,18 @@ class Main
         }
         var ms:Float = Math.round( (stamp() - t0) * 1000000.0 ) / 1000.0;
         trace( "\nTIMING: " + ms );
-        while ( true ) { };
+
+        for ( k in 1 ... 100000000 ) { }
+
+        trace( "\nDELETING");
+        dummies = null;
+
+        for ( k in 1 ... 100000000 ) { }
+#if cpp
+        trace( "\nCOMPACTING");
+        cpp.vm.Gc.compact();
+#end
+        while ( true ) { }
 	}
 
     public static inline function stamp() : Float

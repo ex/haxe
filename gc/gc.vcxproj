@@ -203,6 +203,7 @@
     <ClInclude Include="$(HXCPP_PATH)\src\hx\Hash.h" />
     <ClInclude Include="$(HXCPP_PATH)\src\hx\QuickVec.h" />
     <ClInclude Include="obj\include\cpp\Lib.h" />
+    <ClInclude Include="obj\include\cpp\vm\Gc.h" />
     <ClInclude Include="obj\include\Dummy.h" />
     <ClInclude Include="obj\include\DummyData.h" />
     <ClInclude Include="obj\include\haxe\ds\StringMap.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="$(HXCPP_PATH)\src\Math.cpp" />
     <ClCompile Include="$(HXCPP_PATH)\src\String.cpp" />
     <ClCompile Include="obj\src\cpp\Lib.cpp" />
+    <ClCompile Include="obj\src\cpp\vm\Gc.cpp" />
     <ClCompile Include="obj\src\Dummy.cpp" />
     <ClCompile Include="obj\src\DummyData.cpp" />
     <ClCompile Include="obj\src\haxe\ds\StringMap.cpp" />

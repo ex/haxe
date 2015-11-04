@@ -216,6 +216,9 @@
     <ClInclude Include="$(HXCPP_PATH)\src\hx\gc\GcRegCapture.h">
       <Filter>hxcpp\src\hx\gc</Filter>
     </ClInclude>
+    <ClInclude Include="obj\include\cpp\vm\Gc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="obj\src\__main__.cpp">
@@ -336,5 +339,8 @@
       <Filter>hxcpp\src\hx</Filter>
     </ClCompile>
     <ClCompile Include="test.h" />
+    <ClCompile Include="obj\src\cpp\vm\Gc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
