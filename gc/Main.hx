@@ -53,6 +53,7 @@ class Main
     }
 }
 
+@:unreflective
 class Dummy
 {
     public function new()
@@ -102,6 +103,7 @@ class Dummy
     private static var m_counter:Int;
 }
 
+@:unreflective
 class DummyData
 {
     public var number:Int;
