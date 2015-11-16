@@ -1,26 +1,27 @@
 /* ========================================================================== */
 /*   Mandelbrot.hx                                                            */
 /* -------------------------------------------------------------------------- */
-/*   Copyright (c) 2012 Laurens Rodriguez Oscanoa.                            */
+/*   Copyright (c) 2015 Laurens Rodriguez Oscanoa.                            */
 /*   This code is licensed under the MIT license:                             */
 /*   http://www.opensource.org/licenses/mit-license.php                       */
 /* -------------------------------------------------------------------------- */
 
 package;
 
-import flash.events.KeyboardEvent;
-import flash.display.Sprite;
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.geom.Rectangle;
-import flash.ui.Keyboard;
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Sprite;
+import openfl.display.StageAlign;
+import openfl.display.StageScaleMode;
+import openfl.events.KeyboardEvent;
+import openfl.geom.Rectangle;
+import openfl.Lib;
+import openfl.ui.Keyboard;
 
-class Mandelbrot extends Sprite {
-
-    public function new() {
+class Mandelbrot extends Sprite
+{
+    public function new()
+    {
         super();
         m_canvas = this;
 
@@ -51,15 +52,16 @@ class Mandelbrot extends Sprite {
         drawMandelbrot(true);
     }
 
-    private function onKeyDown(evt:KeyboardEvent):Void {
+    private function onKeyDown(evt:KeyboardEvent):Void
+    {
         switch(evt.keyCode) {
-        case Keyboard.UP, "W".charCodeAt(0):
+        case Keyboard.UP, Keyboard.W:
             moveZoomUp();
-        case Keyboard.DOWN, "S".charCodeAt(0):
+        case Keyboard.DOWN, Keyboard.S:
             moveZoomDown();
-        case Keyboard.LEFT, "A".charCodeAt(0):
+        case Keyboard.LEFT, Keyboard.A:
             moveZoomLeft();
-        case Keyboard.RIGHT, "D".charCodeAt(0):
+        case Keyboard.RIGHT, Keyboard.D:
             moveZoomRight();
         case Keyboard.ENTER, Keyboard.SPACE:
             redraw();
@@ -94,7 +96,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function redraw():Void {
+    private function redraw():Void
+    {
         if (m_zoomIsVisible) {
             // If the zoom grid is visible we want to redraw the zoom zone.
             var dx:Float = (m_fractalZoneX2 - m_fractalZoneX1) / FRACTAL_GRID_CELLS;
@@ -119,14 +122,16 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function increaseSteps(increment:Int):Void {
+    private function increaseSteps(increment:Int):Void
+    {
         if (m_steps + increment > 0) {
             m_steps += increment;
             drawMandelbrot();
         }
     }
 
-    private function zoomOut():Void {
+    private function zoomOut():Void
+    {
         if (m_zoomIsVisible) {
             toggleZoomZone();
         }
@@ -148,8 +153,8 @@ class Mandelbrot extends Sprite {
         drawMandelbrot();
     }
 
-    private function drawMandelbrot(initializeZone:Bool = false):Void {
-
+    private function drawMandelbrot(initializeZone:Bool = false):Void
+    {
         if (m_zoomIsVisible) {
             toggleZoomZone();
         }
@@ -214,7 +219,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function setColors(opc:Int):Void {
+    private function setColors(opc:Int):Void
+    {
         m_colors = new Array();
 
         switch (opc) {
@@ -295,7 +301,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function drawLine(ax:Int, ay:Int, bx:Int, by:Int, color:Int):Void {
+    private function drawLine(ax:Int, ay:Int, bx:Int, by:Int, color:Int):Void
+    {
         var inc:Int;
         if (ax == bx) {
             inc = (ay < by)? 1 : -1;
@@ -315,15 +322,16 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function drawRectangle(x1:Int, y1:Int, x2:Int, y2:Int, color:Int):Void {
+    private function drawRectangle(x1:Int, y1:Int, x2:Int, y2:Int, color:Int):Void
+    {
         drawLine(x1, y1, x1, y2, color);
         drawLine(x1, y2, x2, y2, color);
         drawLine(x2, y2, x2, y1, color);
         drawLine(x2, y1, x1, y1, color);
     }
 
-    private function drawZoomZone():Void {
-
+    private function drawZoomZone():Void
+    {
         var cellWidth:Int = Std.int(m_width / FRACTAL_GRID_CELLS);
         var cellHeight:Int = Std.int(m_height / FRACTAL_GRID_CELLS);
 
@@ -345,7 +353,8 @@ class Mandelbrot extends Sprite {
         m_zoomY2 = y1;
     }
 
-    private function toggleZoomZone():Void {
+    private function toggleZoomZone():Void
+    {
         if (! m_zoomIsVisible) {
             drawZoomZone();
             m_zoomIsVisible = true;
@@ -356,7 +365,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function moveZoomLeft():Void {
+    private function moveZoomLeft():Void
+    {
         if (! m_zoomIsVisible) {
             toggleZoomZone();
         }
@@ -368,7 +378,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function moveZoomRight():Void {
+    private function moveZoomRight():Void
+    {
         if (! m_zoomIsVisible) {
             toggleZoomZone();
         }
@@ -380,7 +391,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function moveZoomUp():Void {
+    private function moveZoomUp():Void
+    {
         if (! m_zoomIsVisible) {
             toggleZoomZone();
         }
@@ -392,7 +404,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function moveZoomDown():Void {
+    private function moveZoomDown():Void
+    {
         if (! m_zoomIsVisible) {
             toggleZoomZone();
         }
@@ -404,7 +417,8 @@ class Mandelbrot extends Sprite {
         }
     }
 
-    private function initializeColorData():Void {
+    private function initializeColorData():Void
+    {
         m_palette = [
             [0, 4, 62, 5, 31, 3],  [7, 4, 4, 4, 42, 5],   [8, 0, 55, 4, 4, 4],   [8, 5, 8, 4, 8, 1],    [12, 4, 44, 2, 46, 3],
             [17, 4, 35, 5, 41, 4], [20, 5, 43, 4, 57, 3], [20, 5, 58, 5, 21, 2], [21, 2, 35, 4, 59, 0], [24, 4, 53, 2, 54, 3],
@@ -426,11 +440,12 @@ class Mandelbrot extends Sprite {
                         [16, 47, 62], [25, 52, 62], [38, 58, 63], [63, 63, 63]];
     }
 
-	public static function main() {
+	public static function main()
+    {
 		var stage = Lib.current.stage;
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
-		
+
         Lib.current.addChild(new Mandelbrot());
 	}
 
