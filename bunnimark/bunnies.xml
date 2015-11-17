@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- metadata, make sure 'package' is at least 2 segments (ie. com.myproject) -->
+	<app file="BunnyMark" title="BunnyMark" main="Main" package="com.ex.BunnyMark" version="1.0.0" company="Kontiky LABS" />
+
+	<!-- output -->
+    <window width="1280" height="720" unless="mobile"/>
+	<window fps="60" />
+	<window orientation="landscape" />
+	<window background="0xFFFFFF" />
+
+	<set name="BUILD_DIR" value="bin" />
+
+    <set name="legacy"/>
+
+	<!-- classpath, haxe libs -->
+	<classpath name="src" />
+	<haxelib name="openfl" />
+
+	<!-- assets -->
+	<assets path="assets" include="*.png" />
+
+</project>
