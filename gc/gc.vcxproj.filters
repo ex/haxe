@@ -342,5 +342,8 @@
     <ClCompile Include="obj\src\cpp\vm\Gc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="obj\src\haxe\ds\IntMap.cpp">
+      <Filter>hxcpp\src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

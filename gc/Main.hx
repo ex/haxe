@@ -3,6 +3,7 @@ package;
 
 import sys.io.File;
 import haxe.Timer;
+import haxe.ds.HashMap;
 
 class Main
 {
@@ -10,6 +11,9 @@ class Main
 
 	public static function main():Void
     {
+#if HXCPP_TELEMETRY
+        m_hxt = new hxtelemetry.HxTelemetry();
+#end
         var t0 = stamp();
         var dummies:Array<Dummy> = new Array<Dummy>();
         var dummy:Dummy = null;
@@ -24,26 +28,32 @@ class Main
             dummies.push( dummy );
             if ( k % 10000 == 0 )
             {
+                updateTelemetry();
                 trace( "k: " + k );
             }
         }
         var ms:Float = Math.round( (stamp() - t0) * 1000000.0 ) / 1000.0;
+        updateTelemetry();
         trace( "\nTIMING: " + ms );
 
         for ( k in 1 ... 100000000 ) { }
 
+
+        updateTelemetry();
         trace( "\nDELETING");
         dummies = null;
+        updateTelemetry();
 
         for ( k in 1 ... 100000000 ) { }
 #if cpp
         trace( "\nCOMPACTING");
         cpp.vm.Gc.compact();
+        updateTelemetry();
 #end
         while ( true ) { }
 	}
 
-    public static inline function stamp() : Float
+    private static inline function stamp():Float
     {
 #if cpp
         return untyped __global__.__time_stamp();
@@ -51,6 +61,17 @@ class Main
         return 0;
 #end
     }
+
+	private static function updateTelemetry():Void
+    {
+#if HXCPP_TELEMETRY
+        m_hxt.advance_frame();
+#end
+    }
+
+#if HXCPP_TELEMETRY
+    private static var m_hxt:hxtelemetry.HxTelemetry;
+#end
 }
 
 @:unreflective
@@ -58,7 +79,7 @@ class Dummy
 {
     public function new()
     {
-        m_data = new Array<DummyData>();
+        m_data = new Map<Int, DummyData>();
 
         if ( !Main.USE_XML )
         {
@@ -66,7 +87,7 @@ class Dummy
             for ( k in 1 ... 15 )
             {
                 dummyData = new DummyData();
-                m_data.push( dummyData );
+                m_data.set( 2 * k, dummyData );
                 m_counter += ( m_counter % 2 == 0 ) ? dummyData.number : -dummyData.number;
             }
         }
@@ -76,6 +97,7 @@ class Dummy
     {
         var strXml:String = File.getContent( "config.xml" );
         var xml:Xml = Xml.parse( strXml ).firstElement();
+        var k = 1;
 
         for ( node in xml.elements() )
         {
@@ -92,14 +114,14 @@ class Dummy
                     dummyData.string = data.firstChild().nodeValue;
                 }
             }
-            m_data.push( dummyData );
+            m_data.set( 2 *k, dummyData );
         }
 
         xml = null;
         strXml = null;
     }
 
-    private var m_data:Array<DummyData>;
+    private var m_data:Map<Int, DummyData>;
     private static var m_counter:Int;
 }
 

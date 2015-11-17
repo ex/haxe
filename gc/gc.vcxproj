@@ -246,6 +246,7 @@
     <ClCompile Include="obj\src\cpp\vm\Gc.cpp" />
     <ClCompile Include="obj\src\Dummy.cpp" />
     <ClCompile Include="obj\src\DummyData.cpp" />
+    <ClCompile Include="obj\src\haxe\ds\IntMap.cpp" />
     <ClCompile Include="obj\src\haxe\ds\StringMap.cpp" />
     <ClCompile Include="obj\src\haxe\IMap.cpp" />
     <ClCompile Include="obj\src\haxe\io\Bytes.cpp" />
