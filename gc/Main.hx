@@ -3,7 +3,7 @@ package;
 
 import sys.io.File;
 import haxe.Timer;
-import haxe.ds.HashMap;
+import haxe.ds.StringMap;
 
 class Main
 {
@@ -11,9 +11,45 @@ class Main
 
 	public static function main():Void
     {
-#if HXCPP_TELEMETRY
+#if true
+        var strings:Array<String> = [ "a", "s", "d", " ", "as", "ad", "sd"];
+        var buffer:Array<StringMap<String>> = new Array<StringMap<String>>();
+        for ( k in 1 ... 10000000 )
+        {
+            var map:StringMap<String> = new StringMap<String>();
+            var max:Int = Math.floor( 20 * Math.random() );
+            var index:Int, len:Int;
+
+            for ( i in 1 ... max )
+            {
+                var key:String = "";
+                len = Math.floor( 10 * Math.random() );
+                for ( j in 1 ... len )
+                {
+                    index = Math.floor( strings.length * Math.random() );
+                    key += strings[index];
+                }
+                var str:String = "";
+                len = Math.floor( 100 * Math.random() );
+                for ( j in 1 ... len )
+                {
+                    index = Math.floor( strings.length * Math.random() );
+                    str += strings[index];
+                }
+                map.set( key, str );
+            }
+            if ( k % 10000 == 0 )
+            {
+                updateTelemetry();
+                trace( "k: " + k );
+            }
+            buffer.push( map );
+        }
+        while ( true ) { }
+#else
+    #if HXCPP_TELEMETRY
         m_hxt = new hxtelemetry.HxTelemetry();
-#end
+    #end
         var t0 = stamp();
         var dummies:Array<Dummy> = new Array<Dummy>();
         var dummy:Dummy = null;
@@ -45,12 +81,13 @@ class Main
         updateTelemetry();
 
         for ( k in 1 ... 100000000 ) { }
-#if cpp
+    #if cpp
         trace( "\nCOMPACTING");
         cpp.vm.Gc.compact();
         updateTelemetry();
-#end
+    #end
         while ( true ) { }
+#end
 	}
 
     private static inline function stamp():Float
