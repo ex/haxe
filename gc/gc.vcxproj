@@ -100,7 +100,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>HX_UNDEFINE_H;HX_DECLARE_MAIN;HX_WINDOWS;_USING_V140_SDK71_;HXCPP_DEBUG;HXCPP_VISIT_ALLOCS;HXCPP_CHECK_POINTER;HXCPP_GC_CHECK_POINTER;HXCPP_API_LEVEL=321;_CRT_SECURE_NO_DEPRECATE;_ALLOW_MSC_VER_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HXCPP_M64;HXCPP_GC_MOVING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HX_UNDEFINE_H;HX_DECLARE_MAIN;HX_WINDOWS;_USING_V140_SDK71_;HXCPP_DEBUG;HXCPP_VISIT_ALLOCS;HXCPP_CHECK_POINTER;HXCPP_GC_CHECK_POINTER;HXCPP_API_LEVEL=321;_CRT_SECURE_NO_DEPRECATE;_ALLOW_MSC_VER_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HXCPP_M64;HXCPP_GC_MOVING;HXCPP_GC_BIG_BLOCKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>obj\include;$(HXCPP_PATH)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/FS /c /wd4996 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -243,7 +243,6 @@
     <ClCompile Include="$(HXCPP_PATH)\src\Math.cpp" />
     <ClCompile Include="$(HXCPP_PATH)\src\String.cpp" />
     <ClCompile Include="obj\src\cpp\Lib.cpp" />
-    <ClCompile Include="obj\src\cpp\vm\Gc.cpp" />
     <ClCompile Include="obj\src\Dummy.cpp" />
     <ClCompile Include="obj\src\DummyData.cpp" />
     <ClCompile Include="obj\src\haxe\ds\IntMap.cpp" />
