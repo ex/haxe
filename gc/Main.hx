@@ -172,5 +172,16 @@ class DummyData
     {
         number = Std.int( 1000000 * Math.random() );
         string = "DEADBABE";
+        calculate( number, 35, true );
+    }
+
+    private function calculate( number:Float, int:Int, bool:Bool, bool2:Bool  = false ):Float
+    {
+        var n2:Float = number * Math.PI;
+        var n3 = n2 + 1;
+        var n4:Int = int + 56;
+        var b:Bool = ( bool && true ) || bool2;
+        var n5:Float = n4 + 3.6 / n3 - ( bool? 4.5 : 6 );
+        return n5;
     }
 }
