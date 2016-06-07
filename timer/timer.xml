@@ -15,6 +15,9 @@
 	<!-- classpath, haxe libs -->
 	<classpath name="src" />
 	<haxelib name="openfl" />
+    <!--<set name="legacy" />-->
+
+    <haxedef name="HXCPP_DEBUG_LINK"/>
 
 	<!-- assets -->
 	<icon name="assets/timer.svg" />
