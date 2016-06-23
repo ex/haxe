@@ -11,7 +11,7 @@ class Main
 
 	public static function main():Void
     {
-#if true
+#if false
         var strings:Array<String> = [ "a", "s", "d", " ", "as", "ad", "sd"];
         var buffer:Array<StringMap<String>> = new Array<StringMap<String>>();
         for ( k in 1 ... 10000000 )
@@ -54,7 +54,7 @@ class Main
         var dummies:Array<Dummy> = new Array<Dummy>();
         var dummy:Dummy = null;
 
-        for ( k in 1 ... 400000 )
+        for ( k in 1 ... 4000000 )
         {
             dummy = new Dummy();
             if ( USE_XML )
