@@ -1,4 +1,4 @@
 haxe
 ====
 
-Haxe bits and tips
+Haxe bits
