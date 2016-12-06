@@ -12,5 +12,26 @@ class Main {
 			trace('Step $i');
             if ( i == 7 ) break;
 		}
+        for ( i in 0 ... 10 )
+        {
+            trace( optional( i ) );
+            trace( noOptional( i ) );
+            trace( inlineOptional( i ) );
+        }
 	}
+
+    private static function optional( x:Int = 0 ):Int
+    {
+        return 2 * x;
+    }
+
+    private static inline function inlineOptional( x:Int = 0 ):Int
+    {
+        return 2 * x;
+    }
+
+    private static function noOptional( x:Int ):Int
+    {
+        return 2 * x;
+    }
 }
