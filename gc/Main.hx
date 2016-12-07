@@ -4,6 +4,7 @@ package;
 import sys.io.File;
 import haxe.Timer;
 import haxe.ds.StringMap;
+import haxe.ds.Vector;
 
 class Main
 {
@@ -54,7 +55,7 @@ class Main
         var dummies:Array<Dummy> = new Array<Dummy>();
         var dummy:Dummy = null;
 
-        for ( k in 1 ... 4000000 )
+        for ( k in 1 ... 300 )
         {
             dummy = new Dummy();
             if ( USE_XML )
@@ -62,7 +63,7 @@ class Main
                 dummy.init();
             }
             dummies.push( dummy );
-            if ( k % 10000 == 0 )
+            if ( k % 10 == 0 )
             {
                 updateTelemetry();
                 trace( "k: " + k );
@@ -70,23 +71,30 @@ class Main
         }
         var ms:Float = Math.round( (stamp() - t0) * 1000000.0 ) / 1000.0;
         updateTelemetry();
-        trace( "\nTIMING: " + ms );
+        trace( "\nTIMING: " + ms + "\nPress a Key..." );
 
-        for ( k in 1 ... 100000000 ) { }
-
+        Sys.getChar( false );
 
         updateTelemetry();
         trace( "\nDELETING");
-        dummies = null;
-        updateTelemetry();
 
-        for ( k in 1 ... 100000000 ) { }
+        for ( k in 0 ... dummies.length )
+        {
+            dummies[k].free();
+            dummies[k] = null;
+        }
+        dummies = null;
+
+        updateTelemetry();
+        trace( "\nPress a Key..." );
+
     #if cpp
         trace( "\nCOMPACTING");
         cpp.vm.Gc.compact();
         updateTelemetry();
     #end
-        while ( true ) { }
+
+        trace( "\nEND\nPress a Key..." );
 #end
 	}
 
@@ -117,6 +125,7 @@ class Dummy
     public function new()
     {
         m_data = new Map<Int, DummyData>();
+        m_memoryBlob = new Vector<Int>( 2500000 );
 
         if ( !Main.USE_XML )
         {
@@ -158,7 +167,15 @@ class Dummy
         strXml = null;
     }
 
+    public function free()
+    {
+        m_memoryBlob = null;
+        m_data = null;
+    }
+
+    private var m_memoryBlob:Vector<Int>;
     private var m_data:Map<Int, DummyData>;
+
     private static var m_counter:Int;
 }
 
